@@ -8,6 +8,19 @@ func reverse(s string) string {
     return string(rs)
 }
 
+func isEqualReversed(prev string, next string) bool {
+	if len(prev) != len(next) {
+		return false
+	}
+	length := len(prev)
+	for i := 0; i < length; i++ {
+		if prev[i] != next[length-i-1] {
+			return false
+		}
+	}
+	return true
+}
+
 func longestPalindrome(s string) string {
 	if len(s) == 0 {
 		return ""
@@ -28,7 +41,7 @@ func longestPalindrome(s string) string {
 			if nextEnd < sLen + 1 {
 				next = s[i+1:nextEnd]
 			}
-			if prev == reverse(next) {
+			if isEqualReversed(prev, next) {
 				if len(result) < len(prev) * 2 {
 					result = prev + next
 					continue
@@ -46,7 +59,7 @@ func longestPalindrome(s string) string {
 				next = s[i+1:nextEnd]
 			}
 
-			if prev == reverse(next) {
+			if isEqualReversed(prev, next) {
 				if len(result) < len(prev) * 2 + 1 {
 					result = prev + s[i:i+1] + next
 				}
