@@ -1,22 +1,38 @@
 package main
 
-func generateParenthesis(n int) []string {
-	result := make([]string, 0)
-	innerGenerate(n, n, &result)
-	return result
-}
+var memos = make(map[int][]string)
 
-func innerGenerate(n int, target int, r *[]string) {
-	if n < target && n != 1 {
-		innerGenerate(n - 1, target, r)
+var memo = make(map[string]bool)
+
+func generateParenthesis(n int) []string {
+	if n == 1 {
+		memos[1] = []string{"()"}
+		return []string{"()"}
 	}
-	
-	tmp := ""
-	for i := 0; i < n; i++ {
-		tmp += "("
+
+	if memos[n] != nil {
+		return memos[n]
 	}
-	for i := 0; i < n; i++ {
-		tmp += ")"
+
+	result := make([]string, 0)
+	for i := 1; i < n; i++ {
+		tmp := generateParenthesis(n - i)
+		lenTmp := len(tmp)
+		tmp2 := generateParenthesis(i)
+		lenTmp2 := len(tmp2)
+		for j := 0; j < lenTmp; j++ {
+			if i == 1 {
+				result = append(result, "(" + tmp[j] + ")")
+			}
+			for k := 0;k < lenTmp2; k++ {
+				candidate := tmp2[k] + tmp[j]
+				if !memo[candidate] {
+					memo[candidate] = true
+					result = append(result, candidate)
+				}
+			}
+		}
 	}
-	r = append(r)
+	memos[n] = result
+	return result
 }
