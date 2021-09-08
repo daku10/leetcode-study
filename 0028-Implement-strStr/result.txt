@@ -1,0 +1,2 @@
+Runtime: 11 ms, faster than 51.39% of Go online submissions for Implement strStr().
+Memory Usage: 2.9 MB, less than 10.46% of Go online submissions for Implement strStr().
