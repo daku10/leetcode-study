@@ -1,0 +1,2 @@
+Runtime: 4 ms, faster than 70.24% of Go online submissions for Divide Two Integers.
+Memory Usage: 2.7 MB, less than 17.06% of Go online submissions for Divide Two Integers.
