@@ -1,6 +1,8 @@
 package main
 
-import "sort"
+import (
+	"sort"
+)
 
 func nextPermutation(nums []int)  {
 
@@ -8,13 +10,21 @@ func nextPermutation(nums []int)  {
 
 	for i := length - 1; i >= 0; i-- {
 		target := nums[i]
-		for j := i - 1; j >= 0; j-- {
-			if nums[j] < target {
-				nums[i] = nums[j]
-				nums[j] = target
-				sort.IntSlice(nums[j + 1:length]).Sort()				
-				return
+		minIndex := -1
+		// range of nums[x] is 0 to 100, 101 is higher than maximum abs value.
+		// using math.MaxInt is compile error on leetcode environment.
+		candidateAbs := 101
+		for j := length - 1; j > i; j-- {
+			if nums[j] > target && nums[j] - target < candidateAbs  {
+				minIndex = j
+				candidateAbs = nums[j] - target
 			}
+		}
+		if minIndex != -1 {
+			nums[i] = nums[minIndex]
+			nums[minIndex] = target
+			sort.IntSlice(nums[i + 1:length]).Sort()				
+			return
 		}
 	}
 	

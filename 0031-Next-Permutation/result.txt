@@ -1,0 +1,2 @@
+Runtime: 2 ms, faster than 21.62% of Go online submissions for Next Permutation.
+Memory Usage: 2.7 MB, less than 8.49% of Go online submissions for Next Permutation.
