@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 )
 
@@ -21,6 +22,7 @@ func TestNextPermutation(t *testing.T)  {
 		{[]int{1, 2}, []int{2, 1}},
 		{[]int{2, 3, 1}, []int{3, 1, 2}},
 		{[]int{2, 1, 3, 5, 4}, []int{2, 1, 4, 3, 5}},
+		{[]int{4,2,0,2,3,2,0}, []int{4,2,0,3,0,2,2}},
 	}
 
 	for index, testCase := range testCases {
@@ -28,6 +30,9 @@ func TestNextPermutation(t *testing.T)  {
 			t.Logf("arg: %v\n", testCase.arg)
 			nextPermutation(testCase.arg)
 			t.Logf("res: %v\n", testCase.arg)
+			if !reflect.DeepEqual(testCase.arg, testCase.expect) {
+				t.Errorf("exp: %v", testCase.expect)
+			}
 		})
 	}
 }
