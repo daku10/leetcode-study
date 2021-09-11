@@ -20,6 +20,7 @@ func TestNextPermutation(t *testing.T)  {
 		{[]int{1}, []int{1}},
 		{[]int{1, 2}, []int{2, 1}},
 		{[]int{2, 3, 1}, []int{3, 1, 2}},
+		{[]int{2, 1, 3, 5, 4}, []int{2, 1, 4, 3, 5}},
 	}
 
 	for index, testCase := range testCases {
