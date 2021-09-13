@@ -1,0 +1,2 @@
+Runtime: 4 ms, faster than 97.92% of Go online submissions for Find First and Last Position of Element in Sorted Array.
+Memory Usage: 4 MB, less than 36.48% of Go online submissions for Find First and Last Position of Element in Sorted Array.
