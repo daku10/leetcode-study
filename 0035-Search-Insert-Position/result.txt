@@ -1,0 +1,2 @@
+Runtime: 4 ms, faster than 81.59% of Go online submissions for Search Insert Position.
+Memory Usage: 3 MB, less than 34.39% of Go online submissions for Search Insert Position.
