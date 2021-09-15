@@ -1,0 +1,2 @@
+Runtime: 5 ms, faster than 16.52% of Go online submissions for Valid Sudoku.
+Memory Usage: 2.7 MB, less than 64.43% of Go online submissions for Valid Sudoku.
