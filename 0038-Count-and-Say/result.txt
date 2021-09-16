@@ -1,0 +1,2 @@
+Runtime: 2 ms, faster than 70.59% of Go online submissions for Count and Say.
+Memory Usage: 2.7 MB, less than 77.94% of Go online submissions for Count and Say.
