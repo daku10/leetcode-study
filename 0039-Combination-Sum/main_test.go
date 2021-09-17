@@ -15,7 +15,10 @@ func TestCombinationSum(t *testing.T) {
 	}
 
 	testCases := []TestCase{
-		{[]int{}, 0, [][]int{}},
+		{[]int{2, 3, 5}, 8, [][]int{{2, 2, 2, 2},{2, 3, 3}, {3, 5}}},
+		{[]int{2}, 1, [][]int{{}}},
+		{[]int{1}, 1, [][]int{{1}}},
+		{[]int{1}, 2, [][]int{{1, 1}}},
 	}
 
 	for index, testCase := range testCases {
