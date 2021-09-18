@@ -8,39 +8,57 @@ import (
 
 func combinationSum(candidates []int, target int) [][]int {
 	itemMap := make(map[int][][]int)
-	resultMap := make(map[string]bool)
-	return search(candidates, target, itemMap, resultMap)
-}
 
-func search(candidates []int, num int, itemMap map[int][][]int, resultMap map[string]bool) [][]int {
-	if itemMap[num] != nil {
-		return itemMap[num]
+	for i := 1; i <= target; i++ {
+		constructResult(candidates, i, itemMap)
+	}
+
+	answerCandidates := itemMap[target]
+
+	if answerCandidates == nil {
+		return [][]int{}
 	}
 
 	result := make([][]int, 0)
+	resultMap := make(map[string]bool)
 
-	length := len(candidates)
-	for i := 0; i < length; i++ {
-		candidate := candidates[i]
-		if candidate == num {
-			r := []int{num}
-			result = append(result, r)
-			if itemMap[num] == nil {
-				tmp := make([][]int, 0)
-				tmp = append(tmp, r)
-				itemMap[num] = tmp
-			} else {				
-				itemMap[num] = append(itemMap[num], r)
-			}		
+	for i := 0; i < len(answerCandidates); i++ {
+		c := answerCandidates[i]
+		sort.IntSlice(c).Sort()
+		key := fmt.Sprintf("%v", c)
+		if !resultMap[key] {
+			result = append(result, c)
+			resultMap[key] = true
 		}
 	}
 
+	return result
+}
+
+func constructResult(candidates []int, num int, itemMap map[int][][]int) {
+	if itemMap[num] != nil {
+		return
+	}
+
+	for i := 0; i < len(candidates); i++ {
+		candidate := candidates[i]
+		if num == candidate {
+			if itemMap[candidate] == nil {
+				itemMap[candidate] = [][]int{{candidate}}
+			} else {
+				itemMap[candidate] = append(itemMap[candidate], []int{candidate})
+			}
+		}
+	}
 
 	for i := 1; i <= num / 2; i++ {
 		n1 := i
-		r1 := search(candidates, n1, itemMap, resultMap)
 		n2 := num - i
-		r2 := search(candidates, n2, itemMap, resultMap)
+		r1 := itemMap[n1]
+		r2 := itemMap[n2]
+		if r1 == nil || r2 == nil {
+			continue
+		}
 		for j := 0; j < len(r1); j++ {
 			for k := 0; k < len(r2); k++ {
 				rj := r1[j]
@@ -48,22 +66,14 @@ func search(candidates []int, num int, itemMap map[int][][]int, resultMap map[st
 				tmp := make([]int, 0)
 				tmp = append(tmp, rj...)
 				tmp = append(tmp, rk...)
-				sort.IntSlice(tmp).Sort()
-				key := fmt.Sprintf("%d_%v", num, tmp)
-				if !resultMap[key] {
-					result = append(result, tmp)
-					if itemMap[num] == nil {
-						im := make([][]int, 0)
-						im = append(im, tmp)
-						itemMap[num] = im
-					} else {				
-						itemMap[num] = append(itemMap[num], tmp)
-					}
-					resultMap[key] = true
-				} 
+				if itemMap[num] == nil {
+					im := make([][]int, 0)
+					im = append(im, tmp)
+					itemMap[num] = im
+				} else {				
+					itemMap[num] = append(itemMap[num], tmp)
+				}
 			}
 		}
 	}
-
-	return result
 }
