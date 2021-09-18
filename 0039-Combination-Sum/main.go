@@ -5,7 +5,6 @@ import (
 	"sort"
 )
 
-
 func combinationSum(candidates []int, target int) [][]int {
 	itemMap := make(map[int][][]int)
 
@@ -51,7 +50,7 @@ func constructResult(candidates []int, num int, itemMap map[int][][]int) {
 		}
 	}
 
-	for i := 1; i <= num / 2; i++ {
+	for i := 1; i <= num/2; i++ {
 		n1 := i
 		n2 := num - i
 		r1 := itemMap[n1]
@@ -70,7 +69,7 @@ func constructResult(candidates []int, num int, itemMap map[int][][]int) {
 					im := make([][]int, 0)
 					im = append(im, tmp)
 					itemMap[num] = im
-				} else {				
+				} else {
 					itemMap[num] = append(itemMap[num], tmp)
 				}
 			}
