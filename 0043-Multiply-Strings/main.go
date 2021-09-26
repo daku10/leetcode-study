@@ -6,7 +6,7 @@ import (
 )
 
 type MyDecimal struct {
-    current []int
+    current []byte
     tenRate int
 }
 
@@ -19,12 +19,12 @@ func multiply(num1 string, num2 string) string {
     len2 := len(num2)
     decimals := []MyDecimal{}
     for i := 0; i < len1; i++ {
-        over := 0
-        decimal := MyDecimal{[]int{}, i}
+        var over byte = 0
+        decimal := MyDecimal{[]byte{}, i}
         for j := 0; j < len2; j++ {
             // 48 means byte to int
-            n1 := int(num1[len1 - i - 1] - 48)
-            n2 := int(num2[len2 - j - 1] - 48)
+            n1 := num1[len1 - i - 1] - 48
+            n2 := num2[len2 - j - 1] - 48
             r := n1 * n2 + over
             one := r % 10
             decimal.current = append(decimal.current, one)
@@ -43,21 +43,21 @@ func calculate(decimals []MyDecimal) string {
 
     dLen := len(decimals)
 
-    arr := make([]int, 0)
+    arr := make([]byte, 0)
 
     for i := 0; i < dLen; i++ {
         decimal := decimals[i]
         currentLen := len(decimal.current)
         arrLen := len(arr)
-        tmp := make([]int, 0)
+        tmp := make([]byte, 0)
 
         for j := 0; j < decimal.tenRate; j++ {
             tmp = append(tmp, arr[j])
         }
-        over := 0
+        var over byte = 0
         for j := 0; j < currentLen; j++ {
             t := j + decimal.tenRate
-            anum := 0
+            var anum byte = 0
             if t < arrLen {
                 anum = arr[t]
             }

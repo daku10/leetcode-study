@@ -1,2 +1,2 @@
-Runtime: 8 ms, faster than 37.13% of Go online submissions for Multiply Strings.
-Memory Usage: 7 MB, less than 21.56% of Go online submissions for Multiply Strings.
+Runtime: 4 ms, faster than 57.48% of Go online submissions for Multiply Strings.
+Memory Usage: 4.7 MB, less than 35.33% of Go online submissions for Multiply Strings.
