@@ -20,6 +20,9 @@ func multiply(num1 string, num2 string) string {
     decimals := []MyDecimal{}
     for i := 0; i < len1; i++ {
         var over byte = 0
+        // decimal has result of num2 * num1[x] in reverse order
+        // ex. num2: 123, num1[x]: 2 => 6, 4, 2
+        // the reason why order is reversed is convinient to append number.
         decimal := MyDecimal{[]byte{}, i}
         for j := 0; j < len2; j++ {
             // 48 means byte to int
