@@ -1,0 +1,2 @@
+Runtime: 2488 ms, faster than 5.43% of Go online submissions for Jump Game II.
+Memory Usage: 7.4 MB, less than 6.17% of Go online submissions for Jump Game II.

@@ -21,10 +21,10 @@ func innerJump(nums []int, index int, length int, indexDistanceMap map[int]int) 
 		return
 	}
 
-	for i := 1; i <= n; i++ {
+	for i := n; i > 0; i-- {
 		next := index + i
 		if next >= length {
-			return
+			continue
 		}
 		if v, ok := indexDistanceMap[next]; ok {
 			if v > distance + 1 {
