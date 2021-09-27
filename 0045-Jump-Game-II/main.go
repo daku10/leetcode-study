@@ -29,6 +29,8 @@ func innerJump(nums []int, index int, length int, indexDistanceMap map[int]int) 
 		if v, ok := indexDistanceMap[next]; ok {
 			if v > distance + 1 {
 				indexDistanceMap[next] = distance + 1
+			} else {
+				continue
 			}
 		} else {
 			indexDistanceMap[next] = distance + 1
