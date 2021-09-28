@@ -1,2 +1,2 @@
-Runtime: 284 ms, faster than 5.26% of Go online submissions for Permutations II.
-Memory Usage: 13.5 MB, less than 5.26% of Go online submissions for Permutations II.
+Runtime: 244 ms, faster than 5.26% of Go online submissions for Permutations II.
+Memory Usage: 8.9 MB, less than 5.26% of Go online submissions for Permutations II.

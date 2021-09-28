@@ -6,29 +6,20 @@ func permuteUnique(nums []int) [][]int {
 
 	result := make([][]int, 0)
 
-	inner([]int{}, nums, &result)
-
 	duplicateMap := make(map[string]bool)
 
-	resultLength := len(result)
+	inner([]int{}, nums, &result, duplicateMap)
 
-	removeDuplicate := make([][]int, 0)
-
-	for i := 0; i < resultLength; i++ {
-		r := result[i]
-		key := fmt.Sprintf("%v", r)
-		if !duplicateMap[key] {
-			removeDuplicate = append(removeDuplicate, r)
-			duplicateMap[key] = true
-		}
-	}
-
-    return removeDuplicate
+	return result
 }
 
-func inner(current []int, rest []int, result *[][]int) {
+func inner(current []int, rest []int, result *[][]int, memo map[string]bool) {
 	if len(rest) == 0 {
-		*result = append(*result, current)
+		key := fmt.Sprintf("%v", current)
+		if !memo[key] {
+			*result = append(*result, current)
+			memo[key] = true
+		}
 		return
 	}
 
@@ -44,6 +35,6 @@ func inner(current []int, rest []int, result *[][]int) {
 		newCurrent := make([]int, 0)
 		newCurrent = append(newCurrent, current...)
 		newCurrent = append(newCurrent, r)
-		inner(newCurrent, restRest, result)
+		inner(newCurrent, restRest, result, memo)
 	}
 }
