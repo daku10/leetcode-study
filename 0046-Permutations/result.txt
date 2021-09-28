@@ -1,0 +1,2 @@
+Runtime: 0 ms, faster than 100.00% of Go online submissions for Permutations.
+Memory Usage: 3 MB, less than 26.55% of Go online submissions for Permutations.
