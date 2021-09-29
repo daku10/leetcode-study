@@ -1,9 +1,7 @@
 package main
 
 import (
-	"reflect"
 	"sort"
-	"strings"
 )
 
 func groupAnagrams(strs []string) [][]string {
@@ -37,12 +35,29 @@ func groupAnagrams(strs []string) [][]string {
 }
 
 func isAnagram(l string, r string) bool {
-	if len(l) != len(r) {
+	length := len(l)
+	if length != len(r) {
 		return false
 	}
-	lSplit := strings.Split(l, "")
-	sort.Strings(lSplit)
-	rSplit := strings.Split(r, "")
-	sort.Strings(rSplit)
-	return reflect.DeepEqual(lSplit, rSplit)
+	lSplit := make([]byte, length)
+	rSplit := make([]byte, length)
+	for i := 0; i < length; i++ {
+		lSplit[i] = l[i]
+		rSplit[i] = r[i]
+	}	
+
+	sort.Slice(lSplit, func(i, j int) bool {
+		return lSplit[i] < lSplit[j]
+	});
+	sort.Slice(rSplit, func(i, j int) bool {
+		return rSplit[i] < rSplit[j]
+	})
+
+	for i := 0; i < length; i++ {
+		if lSplit[i] != rSplit[i] {
+			return false
+		}
+	}
+	
+	return true
 }
