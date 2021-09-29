@@ -29,15 +29,9 @@ func findPair(x int, y int, n int, dan int) []Point {
 
 	xDiff := x - dan
 	
-	if xDiff == 0 {
-		result = append(result, Point{n - dan - 1, y})
-		result = append(result, Point{n - dan - 1, n - dan - 1})
-		result = append(result, Point{x, n - dan - 1})
-	} else {
-		result = append(result, Point{n - dan - 1, y + xDiff})
-		result = append(result, Point{n - dan - 1 - xDiff, n - dan - 1})
-		result = append(result, Point{dan, n - dan - 1 - xDiff})
-	}
+	result = append(result, Point{n - dan - 1, y + xDiff})
+	result = append(result, Point{n - dan - 1 - xDiff, n - dan - 1})
+	result = append(result, Point{dan, n - dan - 1 - xDiff})
 	
 	return result
 }
