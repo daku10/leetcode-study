@@ -4,15 +4,16 @@ func rotate(matrix [][]int)  {
 	// size of square
     n := len(matrix)
 
-	// rotate outer
-	height := 0
-	for i := 0; i < n - 1; i++ {		
-		pairs := findPair(i, height, n)
-		tmp := pairs[3]
-		matrix[pairs[3].x][pairs[3].y] = matrix[pairs[2].x][pairs[2].y]
-		matrix[pairs[2].x][pairs[2].y] = matrix[pairs[1].x][pairs[1].y]
-		matrix[pairs[1].x][pairs[1].y] = matrix[pairs[0].x][pairs[0].y]
-		matrix[pairs[0].x][pairs[0].y] = matrix[tmp.x][tmp.y]
+	for offset := 0; offset < n / 2; offset++ {
+		for i := offset; i < n - offset - 1; i++ {		
+			pairs := findPair(i, offset, n, offset)
+	
+			tmp := matrix[pairs[3].y][pairs[3].x]
+			matrix[pairs[3].y][pairs[3].x] = matrix[pairs[2].y][pairs[2].x]
+			matrix[pairs[2].y][pairs[2].x] = matrix[pairs[1].y][pairs[1].x]
+			matrix[pairs[1].y][pairs[1].x] = matrix[pairs[0].y][pairs[0].x]
+			matrix[pairs[0].y][pairs[0].x] = tmp
+		}
 	}
 }
 
@@ -21,6 +22,22 @@ type Point struct {
 	y int
 }
 
-func findPair(x int, y int, n int) []Point {
-	return nil
+func findPair(x int, y int, n int, dan int) []Point {
+	result := make([]Point, 0)
+	point := Point{x, y}
+	result = append(result, point)
+
+	xDiff := x - dan
+	
+	if xDiff == 0 {
+		result = append(result, Point{n - dan - 1, y})
+		result = append(result, Point{n - dan - 1, n - dan - 1})
+		result = append(result, Point{x, n - dan - 1})
+	} else {
+		result = append(result, Point{n - dan - 1, y + xDiff})
+		result = append(result, Point{n - dan - 1 - xDiff, n - dan - 1})
+		result = append(result, Point{dan, n - dan - 1 - xDiff})
+	}
+	
+	return result
 }
