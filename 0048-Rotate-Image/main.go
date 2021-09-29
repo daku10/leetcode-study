@@ -22,6 +22,19 @@ type Point struct {
 	y int
 }
 
+/*
+ return the combination of rotation.
+ below is example.
+ the same symbol is included in the same conbination.
+ x y is point of left corner.
+ if x = 0, y = 0, return [{x:0, y:0}, {x:0, y:2}, {x:2, y:2}, {x:0, y:2}]
+
+ o x _ o
+ _ $ $ x
+ x $ $ _
+ o _ x o
+
+ */
 func findPair(x int, y int, n int, dan int) []Point {
 	result := make([]Point, 0)
 	point := Point{x, y}
