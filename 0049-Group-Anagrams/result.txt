@@ -1,0 +1,2 @@
+Runtime: 3516 ms, faster than 5.01% of Go online submissions for Group Anagrams.
+Memory Usage: 8.2 MB, less than 70.96% of Go online submissions for Group Anagrams.
