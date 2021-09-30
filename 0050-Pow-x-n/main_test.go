@@ -20,6 +20,9 @@ func TestMyPow(t *testing.T) {
 		{2.00000, -2, 0.25000},
 		{8.88023, 3, 700.28148},
 		{34.00515, -3, 3e-05},
+		{-2.00000, 2, 4.00000},
+		{-13.62608, 3, -2529.95504},
+		{1.00012, 1024, 1.13074},
 	}
 
 	for index, testCase := range testCases {
@@ -51,4 +54,13 @@ func TestProduct(t *testing.T) {
 		t.Errorf("actual: %v", p)
 	}
 
+}
+
+func TestToString(t *testing.T) {
+	d1 := createDecimal(2)
+
+	s := d1.toString()
+	if s != "2" {
+		t.Errorf("actual: %v", s)
+	}
 }

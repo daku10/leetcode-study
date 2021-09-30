@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -8,10 +9,12 @@ import (
 type MyDecimal struct {
 	arr []int
 	scale int
+	sign int // 1 or -1
 }
 
 func product(l MyDecimal, r MyDecimal) MyDecimal {
 	newScale := l.scale + r.scale
+	newSign := l.sign * r.sign
 	lArr := l.arr
 	rArr := r.arr
 	lLength := len(lArr)
@@ -55,10 +58,15 @@ func product(l MyDecimal, r MyDecimal) MyDecimal {
 		result = newResult
 	}
 
-	return MyDecimal{result, newScale}
+	return MyDecimal{result, newScale, newSign}
 }
 
 func createDecimal(f float64) MyDecimal {
+	sign := 1
+	if f < 0 {
+		f = -f
+		sign = -1
+	}
 	s := strconv.FormatFloat(f, 'f', -1, 64)
 	index := strings.Index(s, ".")
     scale := 0
@@ -74,57 +82,47 @@ func createDecimal(f float64) MyDecimal {
 		// 48 is bias of byte to int
 		arr = append(arr, int(s[i] - 48))
 	}
-	return MyDecimal{arr, scale}
+	return MyDecimal{arr, scale, sign}
+}
+
+func (d MyDecimal) toString() string {
+
+	builder := strings.Builder{}
+
+	arrLen := len(d.arr)
+
+	if d.sign == -1 {
+		builder.WriteString("-")
+	}
+
+	for i := 0; i < arrLen; i++ {
+		if i == (arrLen - d.scale) {
+			builder.WriteString(".")
+		}
+		builder.WriteString(fmt.Sprint(d.arr[arrLen - i - 1]))
+	}
+	return builder.String()
 }
 
 func myPow(x float64, n int) float64 {
 
-	d := floatSignificantDigit(x)
-
-	var geta int64 = 1
-	for i := 0; i < d; i++ {
-		geta *= 10
-	}
-
-	getaedX := attachGeta(x, d)
-
-	var result int64 = 1
-	var bigGeta int64 = 1
+	d := createDecimal(x)
 
 	isMinus := false
-
 	if n < 0 {
 		n = -n
 		isMinus = true
 	}
 
+	result := createDecimal(1)
 	for i := 0; i < n; i++ {
-		result *= getaedX
-		bigGeta *= geta
+		result = product(result, d)
 	}
 
-
+	s := result.toString()
+	f, _ := strconv.ParseFloat(s, 64)
 	if isMinus {
-		return 1 / (float64(result) / float64(bigGeta))
+		return 1 / f
 	}
-
-	return float64(result) / float64(bigGeta)
-}
-
-func floatSignificantDigit(f float64) int {
-    s := strconv.FormatFloat(f, 'f', -1, 64)
-
-    i := strings.Index(s, ".")
-    if i == -1 {
-        return 0
-    }
-
-    return len(s[i+1:])
-}
-
-func attachGeta(x float64, d int) int64 {
-	s := strconv.FormatFloat(x, 'f', -1, 64)
-	s = strings.Replace(s, ".", "", -1)
-    n, _ := strconv.ParseInt(s, 10, 64)
-	return n
+	return f
 }
