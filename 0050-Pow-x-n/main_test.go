@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 )
 
@@ -29,4 +30,25 @@ func TestMyPow(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestCreateDecimal(t *testing.T) {
+
+	f := 1.23
+	d := createDecimal(f)
+	if !(d.scale == 2 && reflect.DeepEqual(d.arr, []int{3, 2, 1})) {
+		t.Errorf("actual: %v", d)
+	}
+}
+
+func TestProduct(t *testing.T) {
+
+	d1 := createDecimal(0.2)
+	d2 := createDecimal(0.2)
+
+	p := product(d1, d2)
+	if !(p.scale == 2 && reflect.DeepEqual(p.arr, []int{4, 0, 0})) {
+		t.Errorf("actual: %v", p)
+	}
+
 }
