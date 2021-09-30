@@ -106,16 +106,53 @@ func (d MyDecimal) toString() string {
 
 func myPow(x float64, n int) float64 {
 
+	if n == 0 {
+		return 1.0
+	}
+
 	d := createDecimal(x)
 
 	isMinus := false
+	needOneMore := false
 	if n < 0 {
-		n = -n
-		isMinus = true
+		// so stupid logic
+		if n == -2147483648 {
+			n = 2147483647
+			isMinus = true
+			needOneMore = true
+		} else {
+			n = -n
+			isMinus = true
+		}
 	}
 
 	result := createDecimal(1)
-	for i := 0; i < n; i++ {
+
+	current := n
+	rest := 0
+	limitScale := 20
+
+	for {
+		m, l := destructPow(current)
+		md := createDecimal(x)
+		for i := 0; i < m; i++ {
+			md = product(md, md)
+			md.floorScale(limitScale)
+		}
+		result = product(result, md)
+		result.floorScale(limitScale)
+		current = l
+		if l < 10 {
+			rest = l
+			break;
+		}
+	}
+
+	for i := 0; i < rest; i++ {
+		result = product(result, d)
+	}
+
+	if needOneMore {
 		result = product(result, d)
 	}
 
@@ -125,4 +162,43 @@ func myPow(x float64, n int) float64 {
 		return 1 / f
 	}
 	return f
+}
+
+// n => 2^m + l
+func destructPow(n int) (int, int) {
+	if n == 0 {
+		return 0, 0
+	}
+	m := 0
+	current := 1
+	for {
+		if current * 2 > n {
+			break
+		}
+		m++
+		current = current * 2
+	}
+	l := n - current
+	return m, l
+}
+
+func (d *MyDecimal) floorScale(scale int) {
+	length := len(d.arr)
+	if length < scale || d.scale < scale {
+		return
+	}
+	d.arr = d.arr[(d.scale - scale):length]
+	d.scale = scale
+}
+
+func (d* MyDecimal) floorArr(arrLength int) {
+	length := len(d.arr)
+	if d.scale != 0 || length < arrLength {
+		return
+	}	
+	newArr := make([]int, length)
+	for i := length - 1; i >= (length - arrLength); i-- {
+		newArr[i] = d.arr[i]		
+	}
+	d.arr = newArr
 }
