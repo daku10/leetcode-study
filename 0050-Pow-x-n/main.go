@@ -138,6 +138,13 @@ func myPow(x float64, n int) float64 {
 		for i := 0; i < m; i++ {
 			md = product(md, md)
 			md.floorScale(limitScale)
+			// so badly extremely ugly...
+			// the problem declares -10^4 <= xn <= 10^4
+			// if md.arr grows larger, it should be (1 / large number), should be zero.
+			// this logic is so bad.
+			if md.scale == 0 && len(md.arr) > 100 {
+				return 0.0
+			}
 		}
 		result = product(result, md)
 		result.floorScale(limitScale)
@@ -189,16 +196,4 @@ func (d *MyDecimal) floorScale(scale int) {
 	}
 	d.arr = d.arr[(d.scale - scale):length]
 	d.scale = scale
-}
-
-func (d* MyDecimal) floorArr(arrLength int) {
-	length := len(d.arr)
-	if d.scale != 0 || length < arrLength {
-		return
-	}	
-	newArr := make([]int, length)
-	for i := length - 1; i >= (length - arrLength); i-- {
-		newArr[i] = d.arr[i]		
-	}
-	d.arr = newArr
 }

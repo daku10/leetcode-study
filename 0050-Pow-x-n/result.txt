@@ -1,0 +1,2 @@
+Runtime: 28 ms, faster than 5.45% of Go online submissions for Pow(x, n).
+Memory Usage: 7.1 MB, less than 9.09% of Go online submissions for Pow(x, n).

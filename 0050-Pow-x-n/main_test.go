@@ -97,13 +97,3 @@ func TestFloor(t *testing.T) {
 		t.Errorf("d: %v", d)
 	}
 }
-
-func TestCeil(t *testing.T) {
-	d := createDecimal(123456789.000)
-	fmt.Println(d)
-	d.floorArr(3)
-	fmt.Println(d)
-	if !(d.scale == 0 && reflect.DeepEqual(d.arr, []int{0, 0, 0, 0, 0, 0, 3, 2, 1})) {
-		t.Errorf("d: %v", d)
-	}
-}
