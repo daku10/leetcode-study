@@ -1,0 +1,2 @@
+Runtime: 126 ms, faster than 54.18% of Go online submissions for Maximum Subarray.
+Memory Usage: 9.6 MB, less than 42.10% of Go online submissions for Maximum Subarray.

@@ -7,20 +7,25 @@ import (
 func maxSubArray(nums []int) int {
 	result := math.MinInt
 	currentResult := 0
-	currentMax := math.MinInt
 	length := len(nums)
+	isSearchFirst := true
 	for i := 0; i < length; i++ {
-		for j := i; j < length; j++ {
-			currentResult += nums[j]
-			if currentMax < currentResult {
-				currentMax = currentResult
+		if isSearchFirst {
+			currentResult = nums[i]
+			isSearchFirst = false
+		} else {
+			tmp := nums[i]
+			if currentResult < 0 && tmp > currentResult {
+				currentResult = tmp
+			} else if currentResult+tmp < 0 {
+				isSearchFirst = true
+			} else {
+				currentResult += tmp
 			}
 		}
-		currentResult = 0
-		if currentMax > result {
-			result = currentMax
+		if currentResult > result {
+			result = currentResult
 		}
-		currentMax = math.MinInt
 	}
 	return result
 }
