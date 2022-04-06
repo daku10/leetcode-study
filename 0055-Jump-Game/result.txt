@@ -1,0 +1,2 @@
+Runtime: 52 ms, faster than 96.50% of Go online submissions for Jump Game.
+Memory Usage: 8.8 MB, less than 13.36% of Go online submissions for Jump Game.
