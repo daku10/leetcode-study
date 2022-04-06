@@ -1,0 +1,2 @@
+Runtime: 384 ms, faster than 5.03% of Go online submissions for Merge Intervals.
+Memory Usage: 6.8 MB, less than 92.46% of Go online submissions for Merge Intervals.
