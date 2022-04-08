@@ -22,6 +22,46 @@ func TestInsertInterval(t *testing.T) {
 			arg2:   []int{4, 8},
 			expect: [][]int{{1, 2}, {3, 10}, {12, 16}},
 		},
+		{
+			arg:    [][]int{{1, 2}, {5, 6}},
+			arg2:   []int{3, 4},
+			expect: [][]int{{1, 2}, {3, 4}, {5, 6}},
+		},
+		{
+			arg:    [][]int{{1, 2}},
+			arg2:   []int{2, 4},
+			expect: [][]int{{1, 4}},
+		},
+		{
+			arg:    [][]int{{1, 2}},
+			arg2:   []int{3, 4},
+			expect: [][]int{{1, 2}, {3, 4}},
+		},
+		{
+			arg:    [][]int{{3, 4}},
+			arg2:   []int{1, 2},
+			expect: [][]int{{1, 2}, {3, 4}},
+		},
+		{
+			arg:    [][]int{{3, 4}, {5, 6}},
+			arg2:   []int{1, 2},
+			expect: [][]int{{1, 2}, {3, 4}, {5, 6}},
+		},
+		{
+			arg:    [][]int{{1, 2}, {5, 6}},
+			arg2:   []int{3, 4},
+			expect: [][]int{{1, 2}, {3, 4}, {5, 6}},
+		},
+		{
+			arg:    [][]int{{2, 3}, {4, 5}, {6, 7}},
+			arg2:   []int{1, 8},
+			expect: [][]int{{1, 8}},
+		},
+		{
+			arg:    [][]int{{1, 2}, {3, 4}},
+			arg2:   []int{5, 6},
+			expect: [][]int{{1, 2}, {3, 4}, {5, 6}},
+		},
 	}
 
 	for _, tc := range testcases {

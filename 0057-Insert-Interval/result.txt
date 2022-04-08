@@ -1,0 +1,2 @@
+Runtime: 8 ms, faster than 69.62% of Go online submissions for Insert Interval.
+Memory Usage: 4.8 MB, less than 24.05% of Go online submissions for Insert Interval.
