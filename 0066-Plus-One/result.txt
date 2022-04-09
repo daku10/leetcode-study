@@ -1,0 +1,2 @@
+Runtime: 4 ms, faster than 18.15% of Go online submissions for Plus One.
+Memory Usage: 2.1 MB, less than 64.84% of Go online submissions for Plus One.
