@@ -1,2 +1,2 @@
-Runtime: 34 ms, faster than 5.93% of Go online submissions for Sqrt(x).
-Memory Usage: 2.2 MB, less than 17.80% of Go online submissions for Sqrt(x).
+Runtime: 3 ms, faster than 65.41% of Go online submissions for Sqrt(x).
+Memory Usage: 2.1 MB, less than 17.80% of Go online submissions for Sqrt(x).

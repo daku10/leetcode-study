@@ -14,16 +14,25 @@ func mySqrt(x int) int {
 		return 0
 	}
 
-	for i := 1; i < max; i++ {
-		before := i * i
-		if before == x {
-			return i
-		}
-		after := (i + 1) * (i + 1)
-		if before < x && x < after {
-			return i
-		}
-	}
+	return binarySearch(0, max, x)
+}
 
-	return max
+func binarySearch(left int, right int, answer int) int {
+	if left == right {
+		return left
+	}
+	if right-left == 1 {
+		if right*right == answer {
+			return right
+		}
+		return left
+	}
+	middle := (left + right) / 2
+	sq := middle * middle
+	if sq == answer {
+		return middle
+	} else if sq < answer {
+		return binarySearch(middle, right, answer)
+	}
+	return binarySearch(left, middle, answer)
 }
