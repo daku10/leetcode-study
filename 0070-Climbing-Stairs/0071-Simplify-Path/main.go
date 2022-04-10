@@ -4,51 +4,42 @@ import (
 	"strings"
 )
 
-type Node struct {
-	Val  string
-	Prev *Node
-}
-
 func simplifyPath(path string) string {
 	paths := strings.Split(path, "/")
-	root := &Node{
-		Val:  "",
-		Prev: nil,
-	}
-	current := root
 	length := len(paths)
+	res := make([]string, length)
+	index := 0
 	for i := 0; i < length; i++ {
 		dirName := paths[i]
 		if dirName == "." {
 			continue
 		}
 		if dirName == ".." {
-			if current.Prev == nil {
+			if index == 0 {
 				continue
 			}
-			current = current.Prev
+			index--
 			continue
 		}
 		if dirName == "" {
 			continue
 		}
-		node := &Node{
-			Val:  dirName,
-			Prev: current,
-		}
-		current = node
+		index++
+		res[index] = dirName
 	}
 
-	if current.Prev == nil {
+	if index == 0 {
 		return "/"
 	}
 
-	result := current.Val
-	current = current.Prev
-	for current != nil {
-		result = current.Val + "/" + result
-		current = current.Prev
-	}
+	result := strings.Builder{}
+	result.WriteString("/")
 
-	return result
+	for i := 1; i < index; i++ {
+		result.WriteString(res[i])
+		result.WriteString("/")
+	}
+	result.WriteString(res[index])
+
+	return result.String()
 }
