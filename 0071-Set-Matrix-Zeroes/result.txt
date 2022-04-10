@@ -1,0 +1,2 @@
+Runtime: 15 ms, faster than 59.22% of Go online submissions for Set Matrix Zeroes.
+Memory Usage: 6.5 MB, less than 58.76% of Go online submissions for Set Matrix Zeroes.
