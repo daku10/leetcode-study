@@ -1,0 +1,2 @@
+Runtime: 5 ms, faster than 27.59% of Go online submissions for Simplify Path.
+Memory Usage: 4.1 MB, less than 24.37% of Go online submissions for Simplify Path.
