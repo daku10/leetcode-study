@@ -21,6 +21,11 @@ func TestSearchMatrix(t *testing.T) {
 			argTarget: 13,
 			want:      false,
 		},
+		{
+			argMatrix: [][]int{{1}},
+			argTarget: 0,
+			want:      false,
+		},
 	}
 
 	for _, tc := range testcases {

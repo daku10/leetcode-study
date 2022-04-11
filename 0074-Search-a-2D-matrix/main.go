@@ -1,59 +1,27 @@
 package main
 
 func searchMatrix(matrix [][]int, target int) bool {
-	height := len(matrix)
+	return binarySearchForMatrix(matrix, 0, len(matrix)*len(matrix[0]), target)
+}
+
+func binarySearchForMatrix(matrix [][]int, left int, right int, target int) bool {
 	width := len(matrix[0])
-
-	targetHeight, found := binarySearchForHeightIndex(matrix, 0, height-1, target)
-	if !found {
-		return false
-	}
-	return binarySearch(matrix[targetHeight], 0, width-1, target)
-}
-
-func binarySearchForHeightIndex(matrix [][]int, min int, max int, target int) (int, bool) {
-	minValue := matrix[min][0]
-	maxValue := matrix[max][0]
-	if minValue == target {
-		return min, true
-	}
-	if maxValue == target {
-		return max, true
-	}
-	if minValue > target {
-		return min, false
-	}
-	// search last column
-	if maxValue < target {
-		return max, true
-	}
-	if max-min <= 1 {
-		return min, true
-	}
-	middle := (max + min) / 2
-	middleValue := matrix[middle][0]
-	if middleValue == target {
-		return middle, true
-	}
-	if middleValue > target {
-		return binarySearchForHeightIndex(matrix, min, middle-1, target)
-	}
-	return binarySearchForHeightIndex(matrix, middle, max, target)
-}
-
-func binarySearch(arr []int, left int, right int, target int) bool {
+	height := len(matrix)
 	if right-left <= 1 {
-		if arr[right] == target || arr[left] == target {
+		if matrix[left/width][left%width] == target {
+			return true
+		}
+		if width*height > right && matrix[right/width][right%width] == target {
 			return true
 		}
 		return false
 	}
 	middle := (left + right) / 2
-	if arr[middle] == target {
+	if matrix[middle/width][middle%width] == target {
 		return true
 	}
-	if arr[middle] < target {
-		return binarySearch(arr, middle, right, target)
+	if matrix[middle/width][middle%width] < target {
+		return binarySearchForMatrix(matrix, middle, right, target)
 	}
-	return binarySearch(arr, left, middle, target)
+	return binarySearchForMatrix(matrix, left, middle, target)
 }
