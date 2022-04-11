@@ -19,6 +19,10 @@ func TestSort(t *testing.T) {
 			arg:  []int{2, 0, 1},
 			want: []int{0, 1, 2},
 		},
+		{
+			arg:  []int{2, 0, 2, 1, 1, 0, 0, 2, 2, 2, 1, 2, 0, 1, 2},
+			want: []int{0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2},
+		},
 	}
 
 	for _, tc := range testcases {

@@ -1,17 +1,37 @@
 package main
 
 func sortColors(nums []int) {
-	// selection sort
-	length := len(nums)
-	for i := 0; i < length; i++ {
-		minIndex := i
-		min := nums[i]
-		for j := i + 1; j < length; j++ {
-			if nums[j] < min {
-				min = nums[j]
-				minIndex = j
-			}
+	qsort(nums, 0, len(nums)-1)
+}
+
+func qsort(nums []int, left int, right int) {
+	if right-left <= 1 {
+		if nums[left] > nums[right] {
+			nums[left], nums[right] = nums[right], nums[left]
+			return
 		}
-		nums[i], nums[minIndex] = nums[minIndex], nums[i]
+		return
+	}
+	i, j := left, right
+	pivot := nums[left]
+	i++
+	for {
+		for nums[i] <= pivot && i < right {
+			i++
+		}
+		for nums[j] > pivot && j > left {
+			j--
+		}
+		if i >= j {
+			break
+		}
+		nums[j], nums[i] = nums[i], nums[j]
+	}
+	nums[left], nums[j] = nums[j], nums[left]
+	if j-1 > left {
+		qsort(nums, left, j-1)
+	}
+	if j+1 < right {
+		qsort(nums, j+1, right)
 	}
 }
