@@ -1,0 +1,2 @@
+Runtime: 12 ms, faster than 76.55% of Go online submissions for Combinations.
+Memory Usage: 7.4 MB, less than 65.52% of Go online submissions for Combinations.
