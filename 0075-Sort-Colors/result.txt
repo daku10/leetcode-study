@@ -1,0 +1,2 @@
+Runtime: 3 ms, faster than 31.60% of Go online submissions for Sort Colors.
+Memory Usage: 2.1 MB, less than 68.60% of Go online submissions for Sort Colors.
