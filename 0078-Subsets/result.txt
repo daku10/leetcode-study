@@ -1,0 +1,2 @@
+Runtime: 4 ms, faster than 16.65% of Go online submissions for Subsets.
+Memory Usage: 3 MB, less than 5.30% of Go online submissions for Subsets.
