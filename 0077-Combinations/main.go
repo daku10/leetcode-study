@@ -1,28 +1,25 @@
 package main
 
 func combine(n int, k int) [][]int {
-	if n == k {
-		r := make([][]int, 0)
-		res := make([]int, 0)
-		for i := 1; i <= n; i++ {
-			res = append(res, i)
-		}
-		r = append(r, res)
-		return r
-	}
-	if k == 1 {
-		r := make([][]int, 0)
-		for i := 1; i <= n; i++ {
-			r = append(r, []int{i})
-		}
-		return r
-	}
+	res := make([][]int, 0)
+	curr := make([]int, 0)
+	backtrack(1, n, k, curr, &res)
+	return res
+}
 
-	c := combine(n-1, k-1)
-	length := len(c)
-	for i := 0; i < length; i++ {
-		c[i] = append(c[i], n)
+func backtrack(start int, n int, k int, curr []int, result *[][]int) {
+	if start+k > n+1 {
+		return
 	}
-	c = append(c, combine(n-1, k)...)
-	return c
+	if k == 0 {
+		tmp := make([]int, len(curr))
+		copy(tmp, curr)
+		*result = append(*result, tmp)
+		return
+	}
+	for i := start; i <= n; i++ {
+		curr = append(curr, i)
+		backtrack(i+1, n, k-1, curr, result)
+		curr = curr[0 : len(curr)-1]
+	}
 }
