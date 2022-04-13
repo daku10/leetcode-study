@@ -1,0 +1,2 @@
+Runtime: 63 ms, faster than 95.64% of Go online submissions for Word Search.
+Memory Usage: 1.9 MB, less than 88.16% of Go online submissions for Word Search.
