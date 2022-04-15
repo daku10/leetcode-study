@@ -1,0 +1,2 @@
+Runtime: 0 ms, faster than 100.00% of Go online submissions for Remove Duplicates from Sorted List II.
+Memory Usage: 2.9 MB, less than 88.33% of Go online submissions for Remove Duplicates from Sorted List II.
