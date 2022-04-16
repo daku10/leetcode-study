@@ -1,0 +1,2 @@
+Runtime: 6 ms, faster than 97.87% of Go online submissions for Gray Code.
+Memory Usage: 6.7 MB, less than 91.49% of Go online submissions for Gray Code.
