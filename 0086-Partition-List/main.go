@@ -6,38 +6,32 @@ type ListNode struct {
 }
 
 func partition(head *ListNode, x int) *ListNode {
-	current := head
-	var beforeCurrent *ListNode = nil
-	var beforePartiionNode *ListNode = &ListNode{
-		Next: head,
+	if head == nil {
+		return nil
 	}
-	result := head
-	doneFirstSwap := false
+	beforeHead := &ListNode{
+		Next: nil,
+	}
+	var before *ListNode = beforeHead
+	afterHead := &ListNode{
+		Next: nil,
+	}
+	var after *ListNode = afterHead
+	current := head
 	for current != nil {
 		if current.Val < x {
-			if !doneFirstSwap {
-				doneFirstSwap = true
-				result = current
-			}
-			if beforeCurrent == nil {
-				beforeCurrent = current
-				beforePartiionNode = current
-				current = current.Next
-			} else if beforePartiionNode.Next != current {
-				beforeCurrent.Next = current.Next
-				current.Next = beforePartiionNode.Next
-				beforePartiionNode.Next = current
-				beforePartiionNode = beforePartiionNode.Next
-				current = beforeCurrent.Next
-			} else {
-				beforeCurrent = current
-				beforePartiionNode = beforePartiionNode.Next
-				current = current.Next
-			}
+			before.Next = current
+			before = current
 		} else {
-			beforeCurrent = current
-			current = current.Next
+			after.Next = current
+			after = after.Next
 		}
+
+		current = current.Next
 	}
-	return result
+
+	before.Next = afterHead.Next
+	after.Next = nil
+
+	return beforeHead.Next
 }
