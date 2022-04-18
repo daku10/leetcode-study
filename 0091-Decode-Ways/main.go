@@ -1,7 +1,5 @@
 package main
 
-var memo map[string]int = make(map[string]int)
-
 func numDecodings(s string) int {
 	if s == "" {
 		return 1
@@ -15,17 +13,23 @@ func numDecodings(s string) int {
 		return 1
 	}
 
-	if _, ok := memo[s]; ok {
-		return memo[s]
+	length := len(s)
+	dp := make([]int, length+1)
+	dp[0] = 1
+
+	for i := 1; i < length+1; i++ {
+		if s[i-1] == '0' {
+			if i > 1 && (s[i-2] == '1' || s[i-2] == '2') {
+				dp[i] = dp[i-2]
+			} else {
+				dp[i] = 0
+			}
+		} else if i > 1 && (s[i-2] == '1' || (s[i-2] == '2' && s[i-1]-48 < 7)) {
+			dp[i] = dp[i-1] + dp[i-2]
+		} else {
+			dp[i] = dp[i-1]
+		}
 	}
 
-	if s[0] == '1' || (s[0] == '2' && (s[1]-48) < 7) {
-		tmp := numDecodings(s[1:]) + numDecodings(s[2:])
-		memo[s] = tmp
-		return tmp
-	} else {
-		tmp := numDecodings(s[1:])
-		memo[s] = tmp
-		return tmp
-	}
+	return dp[len(s)]
 }

@@ -1,2 +1,2 @@
-Runtime: 3 ms, faster than 25.00% of Go online submissions for Decode Ways.
-Memory Usage: 2.4 MB, less than 6.72% of Go online submissions for Decode Ways.
+Runtime: 0 ms, faster than 100.00% of Go online submissions for Decode Ways.
+Memory Usage: 1.9 MB, less than 82.80% of Go online submissions for Decode Ways.
