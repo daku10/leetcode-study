@@ -1,29 +1,25 @@
 package main
 
-import (
-	"fmt"
-	"sort"
-)
+import "sort"
 
 func subsetsWithDup(nums []int) [][]int {
-	result := [][]int{{}}
-	memo := make(map[string]bool)
-
-	length := len(nums)
-	for i := 0; i < length; i++ {
-		resLength := len(result)
-		for j := 0; j < resLength; j++ {
-			tmp := make([]int, len(result[j]))
-			copy(tmp, result[j])
-			tmp = append(tmp, nums[i])
-			sort.IntSlice.Sort(tmp)
-			tmpKey := fmt.Sprint(tmp)
-			if !memo[tmpKey] {
-				result = append(result, tmp)
-				memo[tmpKey] = true
-			}
-		}
-	}
-
+	sort.IntSlice.Sort(nums)
+	result := [][]int{}
+	dfs(nums, 0, []int{}, &result)
 	return result
+}
+
+func dfs(nums []int, start int, current []int, result *[][]int) {
+	tmp := make([]int, len(current))
+	copy(tmp, current)
+	*result = append(*result, tmp)
+	length := len(nums)
+	for i := start; i < length; i++ {
+		if i >= 1 && i > start && nums[i] == nums[i-1] {
+			continue
+		}
+		current = append(current, nums[i])
+		dfs(nums, i+1, current, result)
+		current = current[0 : len(current)-1]
+	}
 }
