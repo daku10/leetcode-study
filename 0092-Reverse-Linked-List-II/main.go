@@ -9,37 +9,26 @@ func reverseBetween(head *ListNode, left int, right int) *ListNode {
 	if left == right {
 		return head
 	}
-	current := head
-	reverseBeforeHead := &ListNode{
+
+	dummy := &ListNode{
 		Next: head,
 	}
-	reverseHead := &ListNode{}
-	var reverseCurrent *ListNode = nil
-	isSearching := false
-	index := 1
-	for current != nil {
-		if index == left {
-			isSearching = true
-			reverseHead = current
-		} else if index == right {
-			reverseHead.Next = current.Next
-			reverseBeforeHead.Next = current
-			current.Next = reverseCurrent
-			break
-		}
+	pre := dummy
+	preHead := dummy
+	for i := 0; i < left-1; i++ {
+		pre = pre.Next
+	}
+	preHead = pre
+	pre = pre.Next
+	current := pre.Next
 
+	for i := 0; i < (right - left); i++ {
 		tmp := current
+		pre.Next = current.Next
 		current = current.Next
-		if isSearching {
-			tmp.Next = reverseCurrent
-			reverseCurrent = tmp
-		} else {
-			reverseBeforeHead = reverseBeforeHead.Next
-		}
-		index++
+		tmp.Next = preHead.Next
+		preHead.Next = tmp
 	}
-	if left == 1 {
-		return current
-	}
-	return head
+
+	return dummy.Next
 }
