@@ -1,0 +1,2 @@
+Runtime: 1 ms, faster than 60.53% of Go online submissions for Unique Binary Search Trees.
+Memory Usage: 2 MB, less than 27.37% of Go online submissions for Unique Binary Search Trees.
