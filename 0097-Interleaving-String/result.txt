@@ -1,2 +1,2 @@
-Runtime: 8 ms, faster than 17.02% of Go online submissions for Interleaving String.
-Memory Usage: 4.1 MB, less than 10.64% of Go online submissions for Interleaving String.
+Runtime: 0 ms, faster than 100.00% of Go online submissions for Interleaving String.
+Memory Usage: 2.2 MB, less than 68.09% of Go online submissions for Interleaving String.
