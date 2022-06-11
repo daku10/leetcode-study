@@ -22,6 +22,18 @@ func TestIsInterleave(t *testing.T) {
 			"bccbcccabbccaccaccacbacbacbabbcbccbaaccbbaacbcbaacbacbaccaaccabcaccacaacbacbacccbbabcccccbababcaabcbbcccbbbaa",
 			true,
 		},
+		{
+			"aa",
+			"ab",
+			"abaa",
+			true,
+		},
+		{
+			"bab",
+			"abbbcba",
+			"babbbabcba",
+			true,
+		},
 	}
 
 	for _, tc := range testcases {
