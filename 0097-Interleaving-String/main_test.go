@@ -20,7 +20,7 @@ func TestIsInterleave(t *testing.T) {
 			"bcbccabcccbcbbbcbbacaaccccacbaccabaccbabccbabcaabbbccbbbaa",
 			"ccbccaaccabacaabccaaccbabcbbaacacaccaacbacbbccccbac",
 			"bccbcccabbccaccaccacbacbacbabbcbccbaaccbbaacbcbaacbacbaccaaccabcaccacaacbacbacccbbabcccccbababcaabcbbcccbbbaa",
-			true,
+			false,
 		},
 		{
 			"aa",
@@ -33,6 +33,12 @@ func TestIsInterleave(t *testing.T) {
 			"abbbcba",
 			"babbbabcba",
 			true,
+		},
+		{
+			"bbbbbabbbbabaababaaaabbababbaaabbabbaaabaaaaababbbababbbbbabbbbababbabaabababbbaabababababbbaaababaa",
+			"babaaaabbababbbabbbbaabaabbaabbbbaabaaabaababaaaabaaabbaaabaaaabaabaabbbbbbbbbbbabaaabbababbabbabaab",
+			"babbbabbbaaabbababbbbababaabbabaabaaabbbbabbbaaabbbaaaaabbbbaabbaaabababbaaaaaabababbababaababbababbbababbbbaaaabaabbabbaaaaabbabbaaaabbbaabaaabaababaababbaaabbbbbabbbbaabbabaabbbbabaaabbababbabbabbab",
+			false,
 		},
 	}
 
