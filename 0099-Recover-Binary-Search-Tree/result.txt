@@ -1,0 +1,2 @@
+Runtime: 26 ms, faster than 22.83% of Go online submissions for Recover Binary Search Tree.
+Memory Usage: 6.4 MB, less than 20.47% of Go online submissions for Recover Binary Search Tree.
