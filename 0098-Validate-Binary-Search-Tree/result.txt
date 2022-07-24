@@ -1,0 +1,2 @@
+Runtime: 6 ms, faster than 76.52% of Go online submissions for Validate Binary Search Tree.
+Memory Usage: 5.3 MB, less than 33.36% of Go online submissions for Validate Binary Search Tree.
