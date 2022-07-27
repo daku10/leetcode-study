@@ -1,0 +1,2 @@
+Runtime: 3 ms, faster than 66.86% of Go online submissions for Symmetric Tree.
+Memory Usage: 2.9 MB, less than 17.97% of Go online submissions for Symmetric Tree.
