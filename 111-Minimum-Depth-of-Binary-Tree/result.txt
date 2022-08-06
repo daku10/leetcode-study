@@ -1,2 +1,2 @@
-Runtime: 274 ms, faster than 71.19% of Go online submissions for Minimum Depth of Binary Tree.
-Memory Usage: 23.3 MB, less than 31.14% of Go online submissions for Minimum Depth of Binary Tree.
+Runtime: 180 ms, faster than 99.15% of Go online submissions for Minimum Depth of Binary Tree.
+Memory Usage: 18.3 MB, less than 91.95% of Go online submissions for Minimum Depth of Binary Tree.
