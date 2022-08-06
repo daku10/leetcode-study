@@ -8,11 +8,15 @@ type TreeNode struct {
 
 func buildTree(preorder []int, inorder []int) *TreeNode {
 	var preorderIndex int
-	return buildTreeSub(preorder, &preorderIndex, inorder)
+	inorderMap := make(map[int]int)
+	for i := 0; i < len(inorder); i++ {
+		inorderMap[inorder[i]] = i
+	}
+	return buildTreeSub(preorder, &preorderIndex, 0, len(inorder)-1, inorderMap)
 }
 
-func buildTreeSub(preorder []int, preorderIndex *int, inorder []int) *TreeNode {
-	if len(inorder) == 0 {
+func buildTreeSub(preorder []int, preorderIndex *int, left int, right int, inorderMap map[int]int) *TreeNode {
+	if left > right {
 		return nil
 	}
 	if len(preorder) == *preorderIndex {
@@ -20,26 +24,11 @@ func buildTreeSub(preorder []int, preorderIndex *int, inorder []int) *TreeNode {
 	}
 	rootVal := preorder[*preorderIndex]
 	*preorderIndex++
-	leftInorder, rightInorder := separateInorder(inorder, rootVal)
+	pos := inorderMap[rootVal]
 
 	return &TreeNode{
 		Val:   rootVal,
-		Left:  buildTreeSub(preorder, preorderIndex, leftInorder),
-		Right: buildTreeSub(preorder, preorderIndex, rightInorder),
+		Left:  buildTreeSub(preorder, preorderIndex, left, pos-1, inorderMap),
+		Right: buildTreeSub(preorder, preorderIndex, pos+1, right, inorderMap),
 	}
-}
-
-// left, right
-func separateInorder(inorder []int, target int) ([]int, []int) {
-	for i := 0; i < len(inorder); i++ {
-		if target == inorder[i] {
-			if i == 0 {
-				return nil, inorder[1:]
-			} else if i == len(inorder) {
-				return inorder[:len(inorder)-1], nil
-			}
-			return inorder[:i], inorder[i+1:]
-		}
-	}
-	panic("target must exist")
 }
