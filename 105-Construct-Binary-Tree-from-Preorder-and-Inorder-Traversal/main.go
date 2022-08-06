@@ -7,34 +7,26 @@ type TreeNode struct {
 }
 
 func buildTree(preorder []int, inorder []int) *TreeNode {
-	if len(preorder) == 0 {
+	var preorderIndex int
+	return buildTreeSub(preorder, &preorderIndex, inorder)
+}
+
+func buildTreeSub(preorder []int, preorderIndex *int, inorder []int) *TreeNode {
+	if len(inorder) == 0 {
 		return nil
 	}
-	rootVal := preorder[0]
-	preorder = preorder[1:]
+	if len(preorder) == *preorderIndex {
+		return nil
+	}
+	rootVal := preorder[*preorderIndex]
+	*preorderIndex++
 	leftInorder, rightInorder := separateInorder(inorder, rootVal)
-	leftPreorder, rightPreorder := separatePreorder(preorder, rightInorder)
 
 	return &TreeNode{
 		Val:   rootVal,
-		Left:  buildTree(leftPreorder, leftInorder),
-		Right: buildTree(rightPreorder, rightInorder),
+		Left:  buildTreeSub(preorder, preorderIndex, leftInorder),
+		Right: buildTreeSub(preorder, preorderIndex, rightInorder),
 	}
-}
-
-func separatePreorder(preorder []int, rightInorder []int) ([]int, []int) {
-	if len(rightInorder) == 0 {
-		return preorder, nil
-	}
-	for i := 0; i < len(preorder); i++ {
-		target := preorder[i]
-		for j := 0; j < len(rightInorder); j++ {
-			if target == rightInorder[j] {
-				return preorder[:i], preorder[i:]
-			}
-		}
-	}
-	panic("must be unreachable")
 }
 
 // left, right
