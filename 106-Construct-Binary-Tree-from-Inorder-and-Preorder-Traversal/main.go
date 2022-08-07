@@ -7,17 +7,25 @@ type TreeNode struct {
 }
 
 func buildTree(inorder []int, postorder []int) *TreeNode {
+	postorderIndex := len(postorder) - 1
+	return buildTreeSub(inorder, postorder, &postorderIndex)
+}
+
+func buildTreeSub(inorder []int, postorder []int, postorderIndex *int) *TreeNode {
 	if len(inorder) == 0 {
 		return nil
 	}
-	rootVal := postorder[len(postorder)-1]
-	postorder = postorder[:len(postorder)-1]
+	if *postorderIndex == -1 {
+		return nil
+	}
+	rootVal := postorder[*postorderIndex]
+	*postorderIndex--
 	leftInorder, rightInorder := separateInorder(inorder, rootVal)
-	leftPostorder, rightPostorder := separatePostorder(postorder, leftInorder)
+	// must call Right first to decrement index properly
 	return &TreeNode{
 		Val:   rootVal,
-		Right: buildTree(rightInorder, rightPostorder),
-		Left:  buildTree(leftInorder, leftPostorder),
+		Right: buildTreeSub(rightInorder, postorder, postorderIndex),
+		Left:  buildTreeSub(leftInorder, postorder, postorderIndex),
 	}
 }
 

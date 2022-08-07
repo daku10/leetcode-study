@@ -1,2 +1,2 @@
-Runtime: 16 ms, faster than 6.13% of Go online submissions for Construct Binary Tree from Inorder and Postorder Traversal.
-Memory Usage: 4.3 MB, less than 36.20% of Go online submissions for Construct Binary Tree from Inorder and Postorder Traversal.
+Runtime: 5 ms, faster than 76.07% of Go online submissions for Construct Binary Tree from Inorder and Postorder Traversal.
+Memory Usage: 4.2 MB, less than 60.74% of Go online submissions for Construct Binary Tree from Inorder and Postorder Traversal.
