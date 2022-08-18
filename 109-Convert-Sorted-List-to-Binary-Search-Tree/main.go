@@ -16,13 +16,15 @@ func sortedListToBST(head *ListNode) *TreeNode {
 		return nil
 	}
 	node := head
+	length := 1
 	for node.Next != nil {
 		node = node.Next
+		length++
 	}
-	return sortedListToBSTSub(head, node)
+	return sortedListToBSTSub(head, node, length)
 }
 
-func sortedListToBSTSub(head *ListNode, end *ListNode) *TreeNode {
+func sortedListToBSTSub(head *ListNode, end *ListNode, length int) *TreeNode {
 	if head == nil {
 		return nil
 	}
@@ -31,10 +33,8 @@ func sortedListToBSTSub(head *ListNode, end *ListNode) *TreeNode {
 			Val: head.Val,
 		}
 	}
-	length := 1
 	node := head
 	for node != end {
-		length++
 		node = node.Next
 	}
 	mid := length / 2
@@ -44,7 +44,7 @@ func sortedListToBSTSub(head *ListNode, end *ListNode) *TreeNode {
 	}
 	var left *TreeNode
 	if midPrevNode != head {
-		left = sortedListToBSTSub(head, midPrevNode)
+		left = sortedListToBSTSub(head, midPrevNode, mid-1)
 	} else {
 		left = &TreeNode{
 			Val: head.Val,
@@ -52,7 +52,7 @@ func sortedListToBSTSub(head *ListNode, end *ListNode) *TreeNode {
 	}
 	var right *TreeNode
 	if midPrevNode.Next != nil && midPrevNode.Next != end {
-		right = sortedListToBSTSub(midPrevNode.Next.Next, end)
+		right = sortedListToBSTSub(midPrevNode.Next.Next, end, length-mid-1)
 	}
 	return &TreeNode{
 		Val:   midPrevNode.Next.Val,

@@ -1,0 +1,2 @@
+Runtime: 4 ms, faster than 95.60% of Go online submissions for Convert Sorted List to Binary Search Tree.
+Memory Usage: 5.9 MB, less than 91.21% of Go online submissions for Convert Sorted List to Binary Search Tree.
