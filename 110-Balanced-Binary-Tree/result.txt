@@ -1,0 +1,2 @@
+Runtime: 7 ms, faster than 78.06% of Go online submissions for Balanced Binary Tree.
+Memory Usage: 5.7 MB, less than 79.21% of Go online submissions for Balanced Binary Tree.
