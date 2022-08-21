@@ -1,0 +1,2 @@
+Runtime: 3 ms, faster than 94.98% of Go online submissions for Path Sum.
+Memory Usage: 4.6 MB, less than 93.68% of Go online submissions for Path Sum.
