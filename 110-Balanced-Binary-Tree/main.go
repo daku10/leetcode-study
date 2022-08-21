@@ -7,30 +7,34 @@ type TreeNode struct {
 }
 
 func isBalanced(root *TreeNode) bool {
-	if root == nil {
-		return true
-	}
-	if abs(calcHeight(root.Left, 0), calcHeight(root.Right, 0)) > 1 {
-		return false
-	}
-	return isBalanced(root.Left) && isBalanced(root.Right)
+	h := calcHeight(root)
+	return h != -1
 }
 
-func abs(x, y int) int {
-	res := x - y
-	if res < 0 {
-		return -1 * res
-	}
-	return res
-}
-
-func calcHeight(node *TreeNode, height int) int {
+func calcHeight(node *TreeNode) int {
 	if node == nil {
-		return height
+		return 0
 	}
-	leftHeight := calcHeight(node.Left, height+1)
-	rightHeight := calcHeight(node.Right, height+1)
-	return max(leftHeight, rightHeight)
+	left := calcHeight(node.Left)
+	if left == -1 {
+		return -1
+	}
+	right := calcHeight(node.Right)
+	if right == -1 {
+		return -1
+	}
+	diff := abs(left - right)
+	if diff > 1 {
+		return -1
+	}
+	return max(left, right) + 1
+}
+
+func abs(x int) int {
+	if x < 0 {
+		return -1 * x
+	}
+	return x
 }
 
 func max(x, y int) int {
