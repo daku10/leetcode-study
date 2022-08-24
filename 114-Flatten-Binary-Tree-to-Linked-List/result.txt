@@ -1,0 +1,2 @@
+Runtime: 4 ms, faster than 52.80% of Go online submissions for Flatten Binary Tree to Linked List.
+Memory Usage: 3 MB, less than 7.39% of Go online submissions for Flatten Binary Tree to Linked List.
