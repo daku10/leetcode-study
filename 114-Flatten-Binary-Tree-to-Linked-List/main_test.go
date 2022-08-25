@@ -67,9 +67,9 @@ func TestFlatten(t *testing.T) {
 			flatten(tc.arg)
 			if !cmpTree(tc.want, tc.arg) {
 				t.Errorf("got: %v want: %v", tc.arg, tc.want)
-				printPreorder(tc.arg)
-				fmt.Println()
-				printPreorder(tc.want)
+				// printPreorder(tc.arg)
+				// fmt.Println()
+				// printPreorder(tc.want)
 			}
 		})
 	}

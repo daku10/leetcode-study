@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
@@ -10,22 +12,24 @@ func flatten(root *TreeNode) {
 	if root == nil {
 		return
 	}
-	dummy := &TreeNode{
-		Val: root.Val,
-	}
-	head := dummy
-	preorderTraversal(root, &dummy)
-	*root = *head.Right
+	node := root
+	preorderTraversal(node)
 }
 
-func preorderTraversal(node *TreeNode, result **TreeNode) {
+func preorderTraversal(node *TreeNode) {
 	if node == nil {
 		return
 	}
-	(*result).Right = &TreeNode{
-		Val: node.Val,
+	fmt.Println(node.Val)
+	if node.Left != nil {
+		tmpRight := node.Right
+		rightMostNode := node.Left
+		for rightMostNode.Right != nil {
+			rightMostNode = rightMostNode.Right
+		}
+		rightMostNode.Right = tmpRight
+		node.Right = node.Left
+		node.Left = nil
 	}
-	*result = (*result).Right
-	preorderTraversal(node.Left, result)
-	preorderTraversal(node.Right, result)
+	preorderTraversal(node.Right)
 }
