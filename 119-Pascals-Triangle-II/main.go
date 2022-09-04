@@ -1,16 +1,13 @@
 package main
 
 func getRow(rowIndex int) []int {
-	var prev []int
-	var res []int
+	res := make([]int, rowIndex+1)
 	for i := 0; i <= rowIndex; i++ {
-		res = make([]int, i+1)
 		res[0] = 1
 		res[i] = 1
-		for j := 1; j < i; j++ {
-			res[j] = prev[j-1] + prev[j]
+		for j := i - 1; j > 0; j-- {
+			res[j] = res[j-1] + res[j]
 		}
-		prev = res
 	}
 	return res
 }
