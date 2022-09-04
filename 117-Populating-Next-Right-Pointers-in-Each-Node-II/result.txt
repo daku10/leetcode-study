@@ -1,0 +1,2 @@
+Runtime: 5 ms, faster than 57.56% of Go online submissions for Populating Next Right Pointers in Each Node II.
+Memory Usage: 6.7 MB, less than 16.28% of Go online submissions for Populating Next Right Pointers in Each Node II.
