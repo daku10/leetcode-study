@@ -1,0 +1,2 @@
+Runtime: 1 ms, faster than 58.38% of Go online submissions for Pascal's Triangle.
+Memory Usage: 1.9 MB, less than 87.12% of Go online submissions for Pascal's Triangle.
