@@ -1,15 +1,13 @@
 package main
 
 func minimumTotal(triangle [][]int) int {
-	return dig(triangle, 0, 0, 0)
-}
-
-func dig(triangle [][]int, x int, y int, current int) int {
-	if len(triangle) == y {
-		return current
+	for y := len(triangle) - 2; y >= 0; y-- {
+		for x := 0; x < len(triangle[y]); x++ {
+			triangle[y][x] += min(triangle[y+1][x], triangle[y+1][x+1])
+		}
 	}
-	current += triangle[y][x]
-	return min(dig(triangle, x, y+1, current), dig(triangle, x+1, y+1, current))
+
+	return triangle[0][0]
 }
 
 func min(x, y int) int {

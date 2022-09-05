@@ -1,0 +1,2 @@
+Runtime: 3 ms, faster than 95.42% of Go online submissions for Triangle.
+Memory Usage: 3.3 MB, less than 86.52% of Go online submissions for Triangle.
