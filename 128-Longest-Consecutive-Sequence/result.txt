@@ -1,0 +1,3 @@
+Runtime: 64 ms, faster than 97.95% of Go online submissions for Longest Consecutive Sequence.
+Memory Usage: 8.6 MB, less than 98.22% of Go online submissions for Longest Consecutive Sequence.
+
