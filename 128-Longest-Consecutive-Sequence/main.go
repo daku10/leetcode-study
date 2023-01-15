@@ -1,33 +1,29 @@
 package main
 
-import (
-	"sort"
-)
-
 func longestConsecutive(nums []int) int {
-	if len(nums) == 0 {
-		return 0
+	m := make(map[int]struct{}, len(nums))
+	for _, n := range nums {
+		m[n] = struct{}{}
 	}
-	sort.Ints(nums)
-	var maxRes = 1
-	var res = 1
-	prev := nums[0]
-	for i := 1; i < len(nums); i++ {
-		if prev == nums[i] {
-			continue
-		}
-		if prev+1 == nums[i] {
-			res++
-		} else {
-			if maxRes < res {
-				maxRes = res
+
+	result := 0
+
+	for k := range m {
+		if _, ok := m[k-1]; !ok {
+			current := 1
+			target := k
+			for {
+				if _, ok := m[target+1]; ok {
+					current += 1
+					target += 1
+				} else {
+					break
+				}
 			}
-			res = 1
+			if current > result {
+				result = current
+			}
 		}
-		prev = nums[i]
 	}
-	if maxRes < res {
-		maxRes = res
-	}
-	return maxRes
+	return result
 }
