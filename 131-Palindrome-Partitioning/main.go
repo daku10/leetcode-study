@@ -1,16 +1,12 @@
 package main
 
-import (
-	"reflect"
-)
-
 func partition(s string) [][]string {
 	var result [][]string
 	candidates := createPartition(s)
 L:
 	for _, c := range candidates {
 		for _, r := range result {
-			if reflect.DeepEqual(c, r) {
+			if isEqual(c, r) {
 				continue L
 			}
 		}
@@ -18,6 +14,18 @@ L:
 	}
 
 	return result
+}
+
+func isEqual(a []string, b []string) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := 0; i < len(a); i++ {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
 }
 
 func createPartition(s string) [][]string {
@@ -33,9 +41,9 @@ func createPartition(s string) [][]string {
 		after := createPartition(s[i:])
 		for _, b := range before {
 			for _, a := range after {
-				n := make([]string, 0, len(b)+len(a))
-				n = append(n, b...)
-				n = append(n, a...)
+				n := make([]string, len(b)+len(a))
+				copy(n, b)
+				copy(n[len(b):], a)
 				result = append(result, n)
 			}
 		}
