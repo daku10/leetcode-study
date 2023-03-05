@@ -1,12 +1,41 @@
 package main
 
 func canCompleteCircuit(gas []int, cost []int) int {
-	for i := 0; i < len(gas); i++ {
-		if gas[i] >= cost[i] && canTravel(gas, cost, i) {
-			return i
+	candidates, exists := findCandidates(gas, cost)
+	if len(gas) == 1 {
+		if gas[0] >= cost[0] {
+			return 0
+		}
+		return -1
+	}
+	if !exists {
+		return -1
+	}
+	for _, c := range candidates {
+		if canTravel(gas, cost, c) {
+			return c
 		}
 	}
 	return -1
+}
+
+func findCandidates(gas []int, cost []int) ([]int, bool) {
+	var candidates []int
+	sum := 0
+	for i := 0; i < len(gas); i++ {
+		ci := gas[i] - cost[i]
+		sum += ci
+		if ci < 0 {
+			j := ((i + 1) % len(gas))
+			if gas[j]-cost[j] > 0 {
+				candidates = append(candidates, j)
+			}
+		}
+	}
+	if sum < 0 {
+		return nil, false
+	}
+	return candidates, true
 }
 
 func canTravel(gas []int, cost []int, start int) bool {
@@ -18,7 +47,7 @@ func canTravel(gas []int, cost []int, start int) bool {
 			return false
 		}
 		s++
-		s = s % len(gas)
+		s %= len(gas)
 		tank += gas[s]
 	}
 	return tank >= cost[end]
