@@ -1,15 +1,9 @@
 package main
 
 func singleNumber(nums []int) int {
-	memo := make(map[int]bool)
+	result := 0
 	for _, n := range nums {
-		memo[n] = !memo[n]
+		result ^= n
 	}
-
-	for k, v := range memo {
-		if v {
-			return k
-		}
-	}
-	return 0
+	return result
 }
