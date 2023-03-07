@@ -19,6 +19,10 @@ func TestSingleNumber(t *testing.T) {
 			[]int{0, 1, 0, 1, 0, 1, 99},
 			99,
 		},
+		{
+			[]int{-2, -2, 1, 1, 4, 1, 4, 4, -4, -2},
+			-4,
+		},
 	}
 
 	for i, tc := range testcases {
