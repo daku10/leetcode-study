@@ -6,17 +6,23 @@ type ListNode struct {
 }
 
 func hasCycle(head *ListNode) bool {
-	if head == nil {
+	if head == nil || head.Next == nil {
 		return false
 	}
-	visited := make(map[*ListNode]struct{})
-	n := head
-	for n != nil {
-		if _, ok := visited[n]; ok {
+	n1 := head
+	n2 := head.Next
+	for {
+		if n1 == n2 {
 			return true
 		}
-		visited[n] = struct{}{}
-		n = n.Next
+		if n2 == nil {
+			return false
+		}
+		n1 = n1.Next
+		n2 = n2.Next
+		if n2 == nil {
+			return false
+		}
+		n2 = n2.Next
 	}
-	return false
 }
