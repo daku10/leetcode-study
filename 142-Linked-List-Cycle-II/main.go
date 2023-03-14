@@ -9,14 +9,24 @@ func detectCycle(head *ListNode) *ListNode {
 	if head == nil {
 		return nil
 	}
-	visited := make(map[*ListNode]struct{})
-	n := head
-	for n != nil {
-		if _, ok := visited[n]; ok {
-			return n
+	slow := head
+	fast := head
+	for {
+		if fast == nil || fast.Next == nil {
+			return nil
 		}
-		visited[n] = struct{}{}
-		n = n.Next
+		slow = slow.Next
+		fast = fast.Next.Next
+		if slow == fast {
+			break
+		}
 	}
-	return nil
+	fast = head
+	for {
+		if slow == fast {
+			return slow
+		}
+		slow = slow.Next
+		fast = fast.Next
+	}
 }
