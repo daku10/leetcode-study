@@ -11,13 +11,19 @@ func preorderTraversal(root *TreeNode) []int {
 	if root == nil {
 		return nil
 	}
-	result = append(result, root.Val)
-	if root.Left != nil {
-		result = append(result, preorderTraversal(root.Left)...)
+	for root != nil {
+		if root.Left == nil {
+			result = append(result, root.Val)
+			root = root.Right
+		} else {
+			last := root.Left
+			for last.Right != nil {
+				last = last.Right
+			}
+			last.Right = root.Right
+			result = append(result, root.Val)
+			root = root.Left
+		}
 	}
-	if root.Right != nil {
-		result = append(result, preorderTraversal(root.Right)...)
-	}
-
 	return result
 }
