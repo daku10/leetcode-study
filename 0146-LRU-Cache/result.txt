@@ -1,0 +1,8 @@
+Runtime
+1721 ms
+Beats
+5.15%
+Memory
+94.5 MB
+Beats
+6.34%
