@@ -9,27 +9,53 @@ func sortList(head *ListNode) *ListNode {
 	if head == nil {
 		return nil
 	}
-	pseudoHead := &ListNode{}
-	pNode := pseudoHead
-	originalHead := &ListNode{
-		Next: head,
+	if head.Next == nil {
+		return head
 	}
-	for originalHead.Next != nil {
-		preCurrent := originalHead
-		current := originalHead.Next
-		min := current.Val
-		minIndexPre := preCurrent
-		for current != nil {
-			if current.Val < min {
-				min = current.Val
-				minIndexPre = preCurrent
-			}
-			preCurrent = current
-			current = current.Next
+	if head.Next.Next == nil {
+		if head.Val < head.Next.Val {
+			return head
 		}
-		pNode.Next = minIndexPre.Next
-		pNode = pNode.Next
-		minIndexPre.Next = minIndexPre.Next.Next
+		tmp := head.Next
+		head.Next = nil
+		tmp.Next = head
+		return tmp
 	}
-	return pseudoHead.Next
+
+	slow := head
+	fast := head
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+	}
+	mid := slow.Next
+	slow.Next = nil
+	return mergeList(sortList(head), sortList(mid))
+}
+
+func mergeList(a *ListNode, b *ListNode) *ListNode {
+	pseudo := &ListNode{}
+	p := pseudo
+	for a != nil || b != nil {
+		if a == nil {
+			p.Next = b
+			p = p.Next
+			b = b.Next
+		} else if b == nil {
+			p.Next = a
+			p = p.Next
+			a = a.Next
+		} else {
+			if a.Val < b.Val {
+				p.Next = a
+				p = p.Next
+				a = a.Next
+			} else {
+				p.Next = b
+				p = p.Next
+				b = b.Next
+			}
+		}
+	}
+	return pseudo.Next
 }
