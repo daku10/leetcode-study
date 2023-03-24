@@ -1,44 +1,40 @@
 package main
 
-import (
-	"math"
-)
-
 type MinStack struct {
 	impl    []int
+	min     []int
 	current int
-	min     int
 }
 
 func Constructor() MinStack {
 	return MinStack{
 		impl:    nil,
+		min:     nil,
 		current: 0,
-		min:     math.MaxInt,
 	}
+}
+
+func min(x, y int) int {
+	if x < y {
+		return x
+	}
+	return y
 }
 
 func (this *MinStack) Push(val int) {
 	this.impl = append(this.impl, val)
-	this.current++
-	if this.min > val {
-		this.min = val
+	if this.current == 0 {
+		this.min = append(this.min, val)
+	} else {
+		this.min = append(this.min, min(this.min[len(this.min)-1], val))
 	}
+	this.current++
 }
 
 func (this *MinStack) Pop() {
-	val := this.Top()
 	this.current--
 	this.impl = this.impl[:len(this.impl)-1]
-	if val == this.min {
-		m := math.MaxInt
-		for _, v := range this.impl {
-			if v < m {
-				m = v
-			}
-		}
-		this.min = m
-	}
+	this.min = this.min[:len(this.min)-1]
 }
 
 func (this *MinStack) Top() int {
@@ -46,5 +42,5 @@ func (this *MinStack) Top() int {
 }
 
 func (this *MinStack) GetMin() int {
-	return this.min
+	return this.min[this.current-1]
 }
