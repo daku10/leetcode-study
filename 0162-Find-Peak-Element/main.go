@@ -1,23 +1,25 @@
 package main
 
 func findPeakElement(nums []int) int {
-	if len(nums) == 1 {
-		return 0
+	return findPeakElementBinarySearch(nums, 0, len(nums)-1)
+}
+
+func findPeakElementBinarySearch(nums []int, start int, end int) int {
+	if start == end {
+		return end
 	}
-	for i := range nums {
-		if i == 0 {
-			if nums[0] > nums[1] {
-				return 0
-			}
-		} else if i == len(nums)-1 {
-			if nums[len(nums)-1] > nums[len(nums)-2] {
-				return len(nums) - 1
-			}
-		} else {
-			if nums[i-1] < nums[i] && nums[i] > nums[i+1] {
-				return i
-			}
+	if end-start == 1 {
+		if nums[end] > nums[start] {
+			return end
 		}
+		return start
 	}
-	return 0
+	mid := (end + start) / 2
+	if nums[mid-1] < nums[mid] && nums[mid] > nums[mid+1] {
+		return mid
+	}
+	if nums[mid-1] < nums[mid] && nums[mid] < nums[mid+1] {
+		return findPeakElementBinarySearch(nums, mid, end)
+	}
+	return findPeakElementBinarySearch(nums, start, mid)
 }
