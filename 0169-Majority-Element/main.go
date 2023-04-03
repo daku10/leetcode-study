@@ -1,13 +1,18 @@
 package main
 
 func majorityElement(nums []int) int {
-	m := make(map[int]int)
+	candidate, count := 0, 0
 	for _, n := range nums {
-		v := m[n]
-		if v+1 >= (len(nums)+1)/2 {
-			return n
+		if count == 0 {
+			candidate = n
+			count++
+		} else {
+			if candidate == n {
+				count++
+			} else {
+				count--
+			}
 		}
-		m[n] = v + 1
 	}
-	return 0
+	return candidate
 }
