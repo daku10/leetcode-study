@@ -7,47 +7,29 @@ import (
 )
 
 func compare(x, y string) bool {
-	i := 0
-	for {
-		if x[i] > y[i] {
+	xy := x + y
+	yx := y + x
+	for i := 0; i < len(xy); i++ {
+		if xy[i] > yx[i] {
 			return true
 		}
-		if x[i] < y[i] {
-			return false
-		}
-		i++
-		if i == len(x) {
-			if i < len(y) {
-				return compare(x, y[i:])
-			}
-			return true
-		}
-		if i == len(y) {
-			if i < len(x) {
-				return compare(x[i:], y)
-			}
+		if xy[i] < yx[i] {
 			return false
 		}
 	}
+	return true
 }
 
 func largestNumber(nums []int) string {
-	allZero := true
-	for _, n := range nums {
-		if n != 0 {
-			allZero = false
-			break
-		}
-	}
-	if allZero {
-		return "0"
-	}
 	var result strings.Builder
 
 	sort.Slice(nums, func(i, j int) bool {
-		v := compare(fmt.Sprint(nums[i]), fmt.Sprint(nums[j]))
-		return v
+		return compare(fmt.Sprint(nums[i]), fmt.Sprint(nums[j]))
 	})
+
+	if nums[0] == 0 {
+		return "0"
+	}
 
 	for _, n := range nums {
 		result.WriteString(fmt.Sprint(n))
