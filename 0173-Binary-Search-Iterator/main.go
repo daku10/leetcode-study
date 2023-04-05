@@ -7,39 +7,32 @@ type TreeNode struct {
 }
 
 type BSTIterator struct {
-	impl    []int
-	pointer int
+	nodeStack []*TreeNode
 }
 
 func Constructor(root *TreeNode) BSTIterator {
-	impl := convertToSlice(root)
+	node := root
+	var stack []*TreeNode
+	for node != nil {
+		stack = append(stack, node)
+		node = node.Left
+	}
 	return BSTIterator{
-		impl:    impl,
-		pointer: 0,
+		nodeStack: stack,
 	}
-}
-
-func convertToSlice(root *TreeNode) []int {
-	if root == nil {
-		return nil
-	}
-	var result []int
-	if root.Left != nil {
-		result = append(result, convertToSlice(root.Left)...)
-	}
-	result = append(result, root.Val)
-	if root.Right != nil {
-		result = append(result, convertToSlice(root.Right)...)
-	}
-	return result
 }
 
 func (this *BSTIterator) Next() int {
-	v := this.impl[this.pointer]
-	this.pointer++
-	return v
+	node := this.nodeStack[len(this.nodeStack)-1]
+	this.nodeStack = this.nodeStack[:len(this.nodeStack)-1]
+	n := node.Right
+	for n != nil {
+		this.nodeStack = append(this.nodeStack, n)
+		n = n.Left
+	}
+	return node.Val
 }
 
 func (this *BSTIterator) HasNext() bool {
-	return this.pointer < len(this.impl)
+	return len(this.nodeStack) > 0
 }
