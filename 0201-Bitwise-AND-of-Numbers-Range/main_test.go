@@ -26,6 +26,11 @@ func TestRangeBitwseAnd(t *testing.T) {
 			2147483647,
 			0,
 		},
+		{
+			40,
+			44,
+			40,
+		},
 	}
 
 	for i, tc := range testcases {
