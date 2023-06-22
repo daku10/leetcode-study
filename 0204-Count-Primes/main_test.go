@@ -34,6 +34,14 @@ func TestCountPrime(t *testing.T) {
 			5000000,
 			348513,
 		},
+		{
+			5,
+			2,
+		},
+		{
+			6,
+			3,
+		},
 	}
 
 	for i, tc := range testcases {

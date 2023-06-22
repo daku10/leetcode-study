@@ -3,21 +3,24 @@ package main
 import "math"
 
 func countPrimes(n int) int {
-	count := 0
-	for i := 2; i < n; i++ {
-		if isPrime(i) {
-			count++
-		}
+	if n < 3 {
+		return 0
 	}
-	return count
-}
-
-func isPrime(n int) bool {
+	notPrimeMap := make(map[int]struct{})
 	m := int(math.Sqrt(float64(n)))
 	for i := 2; i <= m; i++ {
-		if n%i == 0 {
-			return false
+		if _, ok := notPrimeMap[i]; ok {
+			continue
+		}
+		j := 2
+		for {
+			o := i * j
+			if o >= n {
+				break
+			}
+			notPrimeMap[o] = struct{}{}
+			j++
 		}
 	}
-	return true
+	return n - 2 - len(notPrimeMap)
 }
