@@ -1,22 +1,19 @@
 package main
 
 func isIsomorphic(s string, t string) bool {
-	sTot := make(map[byte]byte)
-	tTos := make(map[byte]byte)
+	sTot := make([]byte, 128)
+	tTos := make([]byte, 128)
 	for i := 0; i < len(s); i++ {
-		if v, ok := sTot[s[i]]; ok {
-			if v != t[i] {
+		v := sTot[s[i]]
+		w := tTos[t[i]]
+		if (v == 0 && w != 0) || (v != 0 && w == 0) {
+			return false
+		}
+		if v != 0 {
+			if v != t[i] || w != s[i] {
 				return false
-			}
-			if w, ok := tTos[t[i]]; ok {
-				if w != s[i] {
-					return false
-				}
 			}
 		} else {
-			if _, ok := tTos[t[i]]; ok {
-				return false
-			}
 			sTot[s[i]] = t[i]
 			tTos[t[i]] = s[i]
 		}
