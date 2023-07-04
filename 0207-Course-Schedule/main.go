@@ -11,6 +11,7 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 	}
 
 	memo := make(map[int]*Node)
+	heads := make(map[*Node]struct{})
 
 	for _, p := range prerequisites {
 		after := p[0]
@@ -33,33 +34,38 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 			memo[before] = beforeNode
 		}
 		beforeNode.Next = append(beforeNode.Next, afterNode)
+		delete(heads, afterNode)
+		heads[beforeNode] = struct{}{}
 	}
 
-	for i := 0; i < numCourses; i++ {
-		if v, ok := memo[i]; ok {
-			visited := make(map[*Node]struct{})
-			if hasCycle(v, visited) {
-				return false
-			}
+	for k := range heads {
+		visited := make(map[*Node]struct{})
+		okNodes := make(map[*Node]struct{})
+		if hasCycle(k, visited, okNodes) {
+			return false
 		}
 	}
 
 	return true
 }
 
-func hasCycle(current *Node, visited map[*Node]struct{}) bool {
+func hasCycle(current *Node, visited map[*Node]struct{}, okNodes map[*Node]struct{}) bool {
 	if _, ok := visited[current]; ok {
 		return true
+	}
+	if _, ok := okNodes[current]; ok {
+		return false
 	}
 	if current.Next == nil {
 		return false
 	}
 	visited[current] = struct{}{}
 	for _, n := range current.Next {
-		if hasCycle(n, visited) {
+		if hasCycle(n, visited, okNodes) {
 			return true
 		}
 	}
 	delete(visited, current)
+	okNodes[current] = struct{}{}
 	return false
 }
