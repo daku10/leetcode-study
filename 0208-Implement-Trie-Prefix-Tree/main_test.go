@@ -19,3 +19,14 @@ func TestTrie(t *testing.T) {
 		t.Errorf("should true")
 	}
 }
+
+func TestTrie2(t *testing.T) {
+	trie := Constructor()
+	trie.Insert("ab")
+	if trie.Search("a") {
+		t.Errorf("should false")
+	}
+	if !trie.StartsWith("a") {
+		t.Errorf("should true")
+	}
+}
