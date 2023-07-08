@@ -2,21 +2,45 @@ package main
 
 func minSubArrayLen(target int, nums []int) int {
 	result := len(nums) + 1
-	for i := 0; i < len(nums); i++ {
-		sum := 0
-		var j int
-		for j = i; j < len(nums); j++ {
+	i := -1
+	j := 0
+	isExpanding := true
+	sum := 0
+	for j < len(nums) {
+		if isExpanding {
 			sum += nums[j]
 			if sum >= target {
-				if (j-i)+1 < result {
-					result = (j - i) + 1
+				current := (j - (i + 1)) + 1
+				if current == 1 {
+					return 1
 				}
-				break
+				if current < result {
+					result = current
+				}
+				isExpanding = false
+				i++
+			} else {
+				j++
+			}
+		} else {
+			sum -= nums[i]
+			if sum >= target {
+				current := (j - (i + 1)) + 1
+				if current == 1 {
+					return 1
+				}
+				if current < result {
+					result = current
+				}
+				i++
+			} else {
+				isExpanding = true
+				j++
 			}
 		}
-		if i == 0 && j == len(nums) {
-			return 0
-		}
+	}
+	if result == len(nums)+1 {
+		return 0
 	}
 	return result
 }

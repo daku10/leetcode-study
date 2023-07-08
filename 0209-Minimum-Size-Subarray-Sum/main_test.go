@@ -26,6 +26,11 @@ func TestMinSubArrayLen(t *testing.T) {
 			[]int{1, 1, 1, 1, 1, 1, 1, 1},
 			0,
 		},
+		{
+			15,
+			[]int{1, 2, 3, 4, 5},
+			5,
+		},
 	}
 
 	for i, tc := range testcases {
