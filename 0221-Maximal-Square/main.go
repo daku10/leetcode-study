@@ -7,23 +7,26 @@ func maximalSquare(matrix [][]byte) int {
 	for x := 0; x < width; x++ {
 		for y := 0; y < height; y++ {
 			if matrix[y][x] == '1' {
-				res := searchSquare(matrix, x, y)
+				res := searchSquare(matrix, x, y, result)
 				if res == width || res == height {
 					return res * res
 				}
-				if res*res > result {
-					result = res * res
+				if res > result {
+					result = res
 				}
 			}
 		}
 	}
-	return result
+	return result * result
 }
 
-func searchSquare(matrix [][]byte, x int, y int) int {
+func searchSquare(matrix [][]byte, x int, y int, min int) int {
 	width := len(matrix[0])
 	height := len(matrix)
 	result := 1
+	if result < min {
+		result = min
+	}
 	for {
 		for i := x; i <= x+result; i++ {
 			for j := y; j <= y+result; j++ {
