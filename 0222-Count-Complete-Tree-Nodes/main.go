@@ -10,19 +10,20 @@ func countNodes(root *TreeNode) int {
 	if root == nil {
 		return 0
 	}
-	count := 0
-	queue := []*TreeNode{root}
-	for len(queue) != 0 {
-		q := queue[0]
-		count++
-		queue = queue[1:]
-		if q.Left != nil {
-			queue = append(queue, q.Left)
-		}
-		if q.Right != nil {
-			queue = append(queue, q.Right)
-		}
+	leftHeight := calcHeight(root.Left)
+	rightHeight := calcHeight(root.Right)
+	if leftHeight == rightHeight {
+		// left subtree is full binary tree
+		return ((1 << leftHeight) - 1) + 1 + countNodes(root.Right)
+	} else {
+		// right subtree is full binary tree
+		return ((1 << rightHeight) - 1) + 1 + countNodes(root.Left)
 	}
+}
 
-	return count
+func calcHeight(node *TreeNode) int {
+	if node == nil {
+		return 0
+	}
+	return 1 + calcHeight(node.Left)
 }
