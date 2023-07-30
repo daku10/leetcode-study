@@ -5,8 +5,15 @@ import (
 	"strings"
 )
 
+type Node struct {
+	Val  string
+	Prev *Node
+	Next *Node
+}
+
 func calculate(s string) int {
-	var tokens []string
+	pseudo := &Node{}
+	node := pseudo
 	var str strings.Builder
 	muldivCount := 0
 	for _, r := range s {
@@ -14,9 +21,19 @@ func calculate(s string) int {
 		case ' ':
 			continue
 		case '+', '-', '*', '/':
-			tokens = append(tokens, str.String())
+			n := &Node{
+				Val:  str.String(),
+				Prev: node,
+			}
+			node.Next = n
+			node = n
 			str.Reset()
-			tokens = append(tokens, string(r))
+			n2 := &Node{
+				Val:  string(r),
+				Prev: node,
+			}
+			node.Next = n2
+			node = n2
 			if r == '*' || r == '/' {
 				muldivCount++
 			}
@@ -24,45 +41,63 @@ func calculate(s string) int {
 			str.WriteByte(byte(r))
 		}
 	}
-	tokens = append(tokens, str.String())
-	for muldivCount != 0 {
-	L1:
-		for i, t := range tokens {
-			switch t {
-			case "*", "/":
-				pre := toInt(tokens[i-1])
-				nex := toInt(tokens[i+1])
-				if t == "*" {
-					tokens[i-1] = strconv.Itoa(pre * nex)
-				} else {
-					tokens[i-1] = strconv.Itoa(pre / nex)
-				}
-				copy(tokens[i:], tokens[i+2:])
-				tokens = tokens[:len(tokens)-2]
-				muldivCount--
-				break L1
-			}
-		}
+	node.Next = &Node{
+		Val:  str.String(),
+		Prev: node,
 	}
-	for len(tokens) != 1 {
-	L2:
-		for i, t := range tokens {
-			switch t {
-			case "+", "-":
-				pre := toInt(tokens[i-1])
-				nex := toInt(tokens[i+1])
-				if t == "+" {
-					tokens[i-1] = strconv.Itoa(pre + nex)
-				} else {
-					tokens[i-1] = strconv.Itoa(pre - nex)
-				}
-				copy(tokens[i:], tokens[i+2:])
-				tokens = tokens[:len(tokens)-2]
-				break L2
+
+	node = pseudo
+
+	for node != nil {
+		switch node.Val {
+		case "*", "/":
+			pre := toInt(node.Prev.Val)
+			nex := toInt(node.Next.Val)
+			newNode := &Node{}
+			if node.Val == "*" {
+				newNode.Val = strconv.Itoa(pre * nex)
+			} else {
+				newNode.Val = strconv.Itoa(pre / nex)
 			}
+			n1 := node.Prev.Prev
+			n2 := node.Next.Next
+			n1.Next = newNode
+			newNode.Prev = n1
+			newNode.Next = n2
+			if n2 != nil {
+				n2.Prev = newNode
+			}
+			node = newNode
 		}
+		node = node.Next
 	}
-	return toInt(tokens[0])
+
+	node = pseudo
+	for node != nil {
+		switch node.Val {
+		case "+", "-":
+			pre := toInt(node.Prev.Val)
+			nex := toInt(node.Next.Val)
+			newNode := &Node{}
+			if node.Val == "+" {
+				newNode.Val = strconv.Itoa(pre + nex)
+			} else {
+				newNode.Val = strconv.Itoa(pre - nex)
+			}
+			n1 := node.Prev.Prev
+			n2 := node.Next.Next
+			n1.Next = newNode
+			newNode.Prev = n1
+			newNode.Next = n2
+			if n2 != nil {
+				n2.Prev = newNode
+			}
+			node = newNode
+		}
+		node = node.Next
+	}
+
+	return toInt(pseudo.Next.Val)
 }
 
 func toInt(s string) int {
