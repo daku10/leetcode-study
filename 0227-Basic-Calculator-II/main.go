@@ -5,99 +5,85 @@ import (
 	"strings"
 )
 
-type Node struct {
-	Val  string
-	Prev *Node
-	Next *Node
-}
-
 func calculate(s string) int {
-	pseudo := &Node{}
-	node := pseudo
+	var tokens []string
 	var str strings.Builder
-	muldivCount := 0
 	for _, r := range s {
 		switch r {
 		case ' ':
 			continue
 		case '+', '-', '*', '/':
-			n := &Node{
-				Val:  str.String(),
-				Prev: node,
-			}
-			node.Next = n
-			node = n
+			tokens = append(tokens, str.String())
 			str.Reset()
-			n2 := &Node{
-				Val:  string(r),
-				Prev: node,
-			}
-			node.Next = n2
-			node = n2
-			if r == '*' || r == '/' {
-				muldivCount++
-			}
+			tokens = append(tokens, string(r))
 		default:
 			str.WriteByte(byte(r))
 		}
 	}
-	node.Next = &Node{
-		Val:  str.String(),
-		Prev: node,
-	}
-
-	node = pseudo
-
-	for node != nil {
-		switch node.Val {
+	tokens = append(tokens, str.String())
+	used := make(map[int]struct{})
+	for i := 0; i < len(tokens); i++ {
+		t := tokens[i]
+		switch t {
 		case "*", "/":
-			pre := toInt(node.Prev.Val)
-			nex := toInt(node.Next.Val)
-			newNode := &Node{}
-			if node.Val == "*" {
-				newNode.Val = strconv.Itoa(pre * nex)
+			prevIndex := i - 1
+			for {
+				if _, ok := used[prevIndex]; !ok {
+					break
+				}
+				prevIndex--
+			}
+			pre := toInt(tokens[prevIndex])
+			nex := toInt(tokens[i+1])
+			if t == "*" {
+				tokens[i+1] = strconv.Itoa(pre * nex)
 			} else {
-				newNode.Val = strconv.Itoa(pre / nex)
+				tokens[i+1] = strconv.Itoa(pre / nex)
 			}
-			n1 := node.Prev.Prev
-			n2 := node.Next.Next
-			n1.Next = newNode
-			newNode.Prev = n1
-			newNode.Next = n2
-			if n2 != nil {
-				n2.Prev = newNode
-			}
-			node = newNode
+			used[i] = struct{}{}
+			used[prevIndex] = struct{}{}
+			i = i + 1
 		}
-		node = node.Next
 	}
-
-	node = pseudo
-	for node != nil {
-		switch node.Val {
+	for i := 0; i < len(tokens); i++ {
+		t := tokens[i]
+		switch t {
 		case "+", "-":
-			pre := toInt(node.Prev.Val)
-			nex := toInt(node.Next.Val)
-			newNode := &Node{}
-			if node.Val == "+" {
-				newNode.Val = strconv.Itoa(pre + nex)
+			prevIndex := i - 1
+			for {
+				if _, ok := used[prevIndex]; !ok {
+					break
+				}
+				prevIndex--
+			}
+			nextIndex := i + 1
+			for {
+				if _, ok := used[nextIndex]; !ok {
+					break
+				}
+				nextIndex++
+			}
+			pre := toInt(tokens[prevIndex])
+			nex := toInt(tokens[nextIndex])
+			if t == "+" {
+				tokens[nextIndex] = strconv.Itoa(pre + nex)
 			} else {
-				newNode.Val = strconv.Itoa(pre - nex)
+				tokens[nextIndex] = strconv.Itoa(pre - nex)
 			}
-			n1 := node.Prev.Prev
-			n2 := node.Next.Next
-			n1.Next = newNode
-			newNode.Prev = n1
-			newNode.Next = n2
-			if n2 != nil {
-				n2.Prev = newNode
-			}
-			node = newNode
+			used[i] = struct{}{}
+			used[prevIndex] = struct{}{}
+			i = nextIndex
 		}
-		node = node.Next
 	}
 
-	return toInt(pseudo.Next.Val)
+	index := 0
+	for {
+		if _, ok := used[index]; !ok {
+			break
+		}
+		index++
+	}
+	return toInt(tokens[index])
 }
 
 func toInt(s string) int {
