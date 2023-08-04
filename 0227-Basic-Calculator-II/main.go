@@ -5,85 +5,85 @@ import (
 	"strings"
 )
 
-func calculate(s string) int {
-	var tokens []string
-	var str strings.Builder
-	for _, r := range s {
-		switch r {
-		case ' ':
-			continue
-		case '+', '-', '*', '/':
-			tokens = append(tokens, str.String())
-			str.Reset()
-			tokens = append(tokens, string(r))
-		default:
-			str.WriteByte(byte(r))
-		}
-	}
-	tokens = append(tokens, str.String())
-	used := make(map[int]struct{})
-	for i := 0; i < len(tokens); i++ {
-		t := tokens[i]
-		switch t {
-		case "*", "/":
-			prevIndex := i - 1
-			for {
-				if _, ok := used[prevIndex]; !ok {
-					break
-				}
-				prevIndex--
-			}
-			pre := toInt(tokens[prevIndex])
-			nex := toInt(tokens[i+1])
-			if t == "*" {
-				tokens[i+1] = strconv.Itoa(pre * nex)
-			} else {
-				tokens[i+1] = strconv.Itoa(pre / nex)
-			}
-			used[i] = struct{}{}
-			used[prevIndex] = struct{}{}
-			i = i + 1
-		}
-	}
-	for i := 0; i < len(tokens); i++ {
-		t := tokens[i]
-		switch t {
-		case "+", "-":
-			prevIndex := i - 1
-			for {
-				if _, ok := used[prevIndex]; !ok {
-					break
-				}
-				prevIndex--
-			}
-			nextIndex := i + 1
-			for {
-				if _, ok := used[nextIndex]; !ok {
-					break
-				}
-				nextIndex++
-			}
-			pre := toInt(tokens[prevIndex])
-			nex := toInt(tokens[nextIndex])
-			if t == "+" {
-				tokens[nextIndex] = strconv.Itoa(pre + nex)
-			} else {
-				tokens[nextIndex] = strconv.Itoa(pre - nex)
-			}
-			used[i] = struct{}{}
-			used[prevIndex] = struct{}{}
-			i = nextIndex
-		}
-	}
+type stack struct {
+	m []int
+}
 
-	index := 0
-	for {
-		if _, ok := used[index]; !ok {
-			break
+func (s *stack) push(x int) {
+	s.m = append(s.m, x)
+}
+
+func (s *stack) pop() int {
+	r := s.m[len(s.m)-1]
+	s.m = s.m[:len(s.m)-1]
+	return r
+}
+
+func (s *stack) raw() []int {
+	return s.m
+}
+
+func calculate(s string) int {
+	stack := stack{}
+	var current strings.Builder
+	var operator byte = ' '
+	for i := 0; i < len(s); i++ {
+		switch s[i] {
+		case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
+			current.WriteByte(s[i])
+		case '+':
+			stack.push(toInt(current.String()))
+			current.Reset()
+			calc(&stack, operator)
+			operator = '+'
+		case '-':
+			stack.push(toInt(current.String()))
+			current.Reset()
+			calc(&stack, operator)
+			operator = '-'
+		case '*':
+			stack.push(toInt(current.String()))
+			current.Reset()
+			calc(&stack, operator)
+			operator = '*'
+		case '/':
+			stack.push(toInt(current.String()))
+			current.Reset()
+			calc(&stack, operator)
+			operator = '/'
+		default:
 		}
-		index++
 	}
-	return toInt(tokens[index])
+	stack.push(toInt(current.String()))
+	calc(&stack, operator)
+	result := 0
+	for _, r := range stack.raw() {
+		result += r
+	}
+	return result
+}
+
+func calc(s *stack, operator byte) {
+	if operator == ' ' {
+		return
+	}
+	if operator == '+' {
+		return
+	}
+	if operator == '-' {
+		r := s.pop()
+		s.push(r * -1)
+	}
+	if operator == '*' {
+		r := s.pop()
+		t := s.pop()
+		s.push(t * r)
+	}
+	if operator == '/' {
+		r := s.pop()
+		t := s.pop()
+		s.push(t / r)
+	}
 }
 
 func toInt(s string) int {
