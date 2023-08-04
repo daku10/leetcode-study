@@ -1,38 +1,33 @@
 package main
 
-import (
-	"strconv"
-	"strings"
-)
-
 func calculate(s string) int {
-	var current strings.Builder
+	current := 0
 	result := 0
 	lastNumber := 0
 	var operator byte = ' '
 	for i := 0; i < len(s); i++ {
 		switch s[i] {
 		case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
-			current.WriteByte(s[i])
+			current = current*10 + int((s[i] - '0'))
 		case '+', '-', '*', '/':
 			switch operator {
 			case '+':
 				result += lastNumber
-				lastNumber = toInt(current.String())
-				current.Reset()
+				lastNumber = current
+				current = 0
 			case '-':
 				result += lastNumber
-				lastNumber = -1 * toInt(current.String())
-				current.Reset()
+				lastNumber = -1 * current
+				current = 0
 			case '*':
-				lastNumber *= toInt(current.String())
-				current.Reset()
+				lastNumber *= current
+				current = 0
 			case '/':
-				lastNumber /= toInt(current.String())
-				current.Reset()
+				lastNumber /= current
+				current = 0
 			default:
-				lastNumber = toInt(current.String())
-				current.Reset()
+				lastNumber = current
+				current = 0
 			}
 			operator = s[i]
 		default:
@@ -41,27 +36,17 @@ func calculate(s string) int {
 	switch operator {
 	case '+':
 		result += lastNumber
-		lastNumber = toInt(current.String())
-		current.Reset()
+		lastNumber = current
 	case '-':
 		result += lastNumber
-		lastNumber = -1 * toInt(current.String())
-		current.Reset()
+		lastNumber = -1 * current
 	case '*':
-		lastNumber *= toInt(current.String())
-		current.Reset()
+		lastNumber *= current
 	case '/':
-		lastNumber /= toInt(current.String())
-		current.Reset()
+		lastNumber /= current
 	default:
-		lastNumber = toInt(current.String())
-		current.Reset()
+		lastNumber = current
 	}
 	result += lastNumber
 	return result
-}
-
-func toInt(s string) int {
-	r, _ := strconv.Atoi(s)
-	return r
 }
