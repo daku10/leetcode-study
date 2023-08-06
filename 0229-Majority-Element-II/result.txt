@@ -1,8 +1,8 @@
 Runtime
-8 ms
+11 ms
 Beats
-87.23%
+71.87%
 Memory
 5 MB
 Beats
-48.94%
+100%
