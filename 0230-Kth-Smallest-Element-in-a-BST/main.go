@@ -7,31 +7,26 @@ type TreeNode struct {
 }
 
 func kthSmallest(root *TreeNode, k int) int {
-	var currentRoot *TreeNode
-	currentRoot = root
-	for {
-		smallest, returnedRoot := findSmallestAndReconstruct(currentRoot)
-		k--
-		if k == 0 {
-			return smallest
-		}
-		currentRoot = returnedRoot
-	}
+	v, _ := find(root, k)
+	return v
 }
 
-func findSmallestAndReconstruct(root *TreeNode) (int, *TreeNode) {
-	node := root
-	if node.Left == nil {
-		v := node.Val
-		newRoot := node.Right
-		node.Right = nil
-		return v, newRoot
+func find(node *TreeNode, count int) (int, int) {
+	currentCount := count
+	if node.Left != nil {
+		v, newCount := find(node.Left, count)
+		if newCount == 0 {
+			return v, 0
+		}
+		currentCount = newCount
 	}
-	for node.Left.Left != nil {
-		node = node.Left
+	currentCount--
+	if currentCount == 0 {
+		return node.Val, 0
 	}
-	v := node.Left.Val
-	newLeft := node.Left.Right
-	node.Left = newLeft
-	return v, root
+	if node.Right != nil {
+		return find(node.Right, currentCount)
+	}
+	// unreachable
+	return 0, currentCount
 }

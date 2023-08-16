@@ -49,6 +49,16 @@ func TestKthSmallest(t *testing.T) {
 			3,
 			3,
 		},
+		{
+			&TreeNode{
+				Val: 1,
+				Right: &TreeNode{
+					Val: 2,
+				},
+			},
+			2,
+			2,
+		},
 	}
 
 	for i, tc := range testcases {
