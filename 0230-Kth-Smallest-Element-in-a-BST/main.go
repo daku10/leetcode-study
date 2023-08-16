@@ -1,7 +1,5 @@
 package main
 
-import "sort"
-
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
@@ -9,20 +7,31 @@ type TreeNode struct {
 }
 
 func kthSmallest(root *TreeNode, k int) int {
-	var vals []int
-	queue := []*TreeNode{root}
-	for len(queue) != 0 {
-		q := queue[0]
-		queue = queue[1:]
-		vals = append(vals, q.Val)
-		if q.Left != nil {
-			queue = append(queue, q.Left)
+	var currentRoot *TreeNode
+	currentRoot = root
+	for {
+		smallest, returnedRoot := findSmallestAndReconstruct(currentRoot)
+		k--
+		if k == 0 {
+			return smallest
 		}
-		if q.Right != nil {
-			queue = append(queue, q.Right)
-		}
+		currentRoot = returnedRoot
 	}
-	sort.Ints(vals)
+}
 
-	return vals[k-1]
+func findSmallestAndReconstruct(root *TreeNode) (int, *TreeNode) {
+	node := root
+	if node.Left == nil {
+		v := node.Val
+		newRoot := node.Right
+		node.Right = nil
+		return v, newRoot
+	}
+	for node.Left.Left != nil {
+		node = node.Left
+	}
+	v := node.Left.Val
+	newLeft := node.Left.Right
+	node.Left = newLeft
+	return v, root
 }
