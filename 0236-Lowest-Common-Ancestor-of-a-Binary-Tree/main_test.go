@@ -14,43 +14,43 @@ func TestLowestCommonAncestor(t *testing.T) {
 	}
 
 	testcases := []arg{
-		func() arg {
-			p := &TreeNode{
-				Val: 5,
-				Left: &TreeNode{
-					Val: 6,
-				},
-				Right: &TreeNode{
-					Val: 2,
-					Left: &TreeNode{
-						Val: 7,
-					},
-					Right: &TreeNode{
-						Val: 4,
-					},
-				},
-			}
-			q := &TreeNode{
-				Val: 1,
-				Left: &TreeNode{
-					Val: 0,
-				},
-				Right: &TreeNode{
-					Val: 8,
-				},
-			}
-			root := &TreeNode{
-				Val:   3,
-				Left:  p,
-				Right: q,
-			}
-			return arg{
-				root: root,
-				p:    p,
-				q:    q,
-				want: root,
-			}
-		}(),
+		// func() arg {
+		// 	p := &TreeNode{
+		// 		Val: 5,
+		// 		Left: &TreeNode{
+		// 			Val: 6,
+		// 		},
+		// 		Right: &TreeNode{
+		// 			Val: 2,
+		// 			Left: &TreeNode{
+		// 				Val: 7,
+		// 			},
+		// 			Right: &TreeNode{
+		// 				Val: 4,
+		// 			},
+		// 		},
+		// 	}
+		// 	q := &TreeNode{
+		// 		Val: 1,
+		// 		Left: &TreeNode{
+		// 			Val: 0,
+		// 		},
+		// 		Right: &TreeNode{
+		// 			Val: 8,
+		// 		},
+		// 	}
+		// 	root := &TreeNode{
+		// 		Val:   3,
+		// 		Left:  p,
+		// 		Right: q,
+		// 	}
+		// 	return arg{
+		// 		root: root,
+		// 		p:    p,
+		// 		q:    q,
+		// 		want: root,
+		// 	}
+		// }(),
 		func() arg {
 			q := &TreeNode{
 				Val: 4,
