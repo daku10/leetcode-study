@@ -1,20 +1,19 @@
 package main
 
 func isAnagram(s string, t string) bool {
-	sMap := make(map[byte]int)
-	tMap := make(map[byte]int)
+	memo := make(map[byte]int, 26)
 
 	if len(s) != len(t) {
 		return false
 	}
 
 	for i := range s {
-		sMap[s[i]]++
-		tMap[t[i]]++
+		memo[s[i]]++
+		memo[t[i]]--
 	}
 
-	for k, v := range sMap {
-		if v != tMap[k] {
+	for _, v := range memo {
+		if v != 0 {
 			return false
 		}
 	}
