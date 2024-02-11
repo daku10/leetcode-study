@@ -1,14 +1,9 @@
 package main
 
 func missingNumber(nums []int) int {
-	n := make([]int, len(nums)+1)
-	for _, num := range nums {
-		n[num]++
+	var sum int
+	for _, n := range nums {
+		sum += n
 	}
-	for i, v := range n {
-		if v == 0 {
-			return i
-		}
-	}
-	return 0
+	return ((len(nums)+1)*len(nums))/2 - sum
 }
