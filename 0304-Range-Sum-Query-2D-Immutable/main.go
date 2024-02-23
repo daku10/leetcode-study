@@ -6,27 +6,36 @@ type NumMatrix struct {
 
 func Constructor(matrix [][]int) NumMatrix {
 	sums := make([][]int, len(matrix))
-	for y := 0; y < len(matrix); y++ {
-		sums[y] = make([]int, len(matrix[y]))
+	var sum int
+	height := len(matrix)
+	width := len(matrix[0])
+	sums[0] = make([]int, width)
+	for x := 0; x < width; x++ {
+		sum += matrix[0][x]
+		sums[0][x] = sum
+	}
+	for y := 1; y < height; y++ {
+		sums[y] = make([]int, width)
 		var sum int
-		for x := 0; x < len(matrix[y]); x++ {
+		for x := 0; x < width; x++ {
 			sum += matrix[y][x]
-			sums[y][x] += sum
+			sums[y][x] = (sum + sums[y-1][x])
 		}
 	}
 	return NumMatrix{matrix: sums}
 }
 
+// y, x
 func (this *NumMatrix) SumRegion(row1 int, col1 int, row2 int, col2 int) int {
-	var sum int
-	if col1 == 0 {
-		for y := row1; y <= row2; y++ {
-			sum += this.matrix[y][col2]
-		}
-		return sum
+	var up, left, upleft int
+	if row1 != 0 {
+		up = this.matrix[row1-1][col2]
 	}
-	for y := row1; y <= row2; y++ {
-		sum += (this.matrix[y][col2] - this.matrix[y][col1-1])
+	if col1 != 0 {
+		left = this.matrix[row2][col1-1]
 	}
-	return sum
+	if row1 != 0 && col1 != 0 {
+		upleft = this.matrix[row1-1][col1-1]
+	}
+	return this.matrix[row2][col2] - up - left + upleft
 }
