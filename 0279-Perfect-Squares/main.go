@@ -1,41 +1,23 @@
 package main
 
-import "math"
-
 func numSquares(n int) int {
-	memo := make([]int, 10001)
-	for i := 1; i <= 100; i++ {
-		memo[i*i] = 1
-	}
+	memo := make([]int, n+1)
 	return numFindAndCalc(n, memo)
 }
 
 func numFindAndCalc(n int, memo []int) int {
+	if n < 4 {
+		return n
+	}
 	if memo[n] != 0 {
 		return memo[n]
 	}
-	current := math.MaxInt
-	sq := int(math.Sqrt(float64(n)))
-	for i := sq; i >= 2; i-- {
-		tmp := numFindAndCalc(n-(i*i), memo) + 1
-		if tmp == 2 {
-			memo[n] = 2
-			return 2
-		}
-		if tmp < current {
-			current = tmp
-		}
+	// 1 + 1 + 1 + .... is maximal answer
+	answer := n
+	for i := 1; i*i <= n; i++ {
+		square := i * i
+		answer = min(answer, 1+numFindAndCalc(n-square, memo))
 	}
-	for i := n / 2; i >= 1; i-- {
-		tmp := numFindAndCalc(n-i, memo) + numFindAndCalc(i, memo)
-		if tmp == 2 {
-			memo[n] = 2
-			return 2
-		}
-		if tmp < current {
-			current = tmp
-		}
-	}
-	memo[n] = current
-	return current
+	memo[n] = answer
+	return answer
 }
