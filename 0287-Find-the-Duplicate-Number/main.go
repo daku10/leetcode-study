@@ -1,12 +1,20 @@
 package main
 
 func findDuplicate(nums []int) int {
-	memo := make(map[int]struct{}, len(nums))
-	for _, num := range nums {
-		if _, ok := memo[num]; ok {
-			return num
+	slow := 0
+	fast := 0
+
+	for {
+		slow = nums[slow]
+		fast = nums[nums[fast]]
+		if slow == fast {
+			break
 		}
-		memo[num] = struct{}{}
 	}
-	return 0
+	slow = 0
+	for slow != fast {
+		slow = nums[slow]
+		fast = nums[fast]
+	}
+	return slow
 }
