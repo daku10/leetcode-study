@@ -22,6 +22,14 @@ func TestIsPowerOfFour(t *testing.T) {
 			1,
 			true,
 		},
+		{
+			2,
+			false,
+		},
+		{
+			8,
+			false,
+		},
 	}
 
 	for i, tc := range testcases {

@@ -1,15 +1,13 @@
 package main
 
+import (
+	"math"
+)
+
 func isPowerOfFour(n int) bool {
 	if n <= 0 {
 		return false
 	}
-	for n != 1 {
-		m := n % 4
-		if m != 0 {
-			return false
-		}
-		n /= 4
-	}
-	return true
+	l := math.Log2(float64(n))
+	return l == math.Floor(l) && int(l)%2 == 0
 }
