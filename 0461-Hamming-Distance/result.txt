@@ -1,0 +1,6 @@
+Runtime
+1 ms
+Beats 68.91% of users with Go
+Memory
+2.20 MB
+Beats 89.92% of users with Go
