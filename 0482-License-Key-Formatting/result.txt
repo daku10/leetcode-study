@@ -1,6 +1,6 @@
 Runtime
-427 ms
-Beats 29.81%
+4 ms
+Beats 82.69%
 Memory
-88.96 MB
-Beats 28.85%
+4.54 MB
+Beats 98.08%

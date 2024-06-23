@@ -21,6 +21,11 @@ func TestLicenseKeyFormatting(t *testing.T) {
 			2,
 			"2-5G-3J",
 		},
+		{
+			"---",
+			3,
+			"",
+		},
 	}
 
 	for i, tc := range testcases {

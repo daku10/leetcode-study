@@ -4,15 +4,20 @@ import "strings"
 
 func licenseKeyFormatting(s string, k int) string {
 	ss := strings.ReplaceAll(strings.ToUpper(s), "-", "")
-	dashCount := -1
-	var result string
-	for i := len(ss) - 1; i >= 0; i-- {
-		if dashCount == k-1 {
-			result = "-" + result
-		}
-		result = string(ss[i]) + result
-		dashCount++
-		dashCount %= k
+	if ss == "" {
+		return ""
 	}
-	return result
+	var result strings.Builder
+	result.Grow(len(ss) + len(ss)/k)
+	// write head
+	f := len(ss) % k
+	if f == 0 {
+		f = k
+	}
+	result.WriteString(ss[:f])
+	for i := f; i < len(ss); i += k {
+		result.WriteByte('-')
+		result.WriteString(ss[i : i+k])
+	}
+	return result.String()
 }
