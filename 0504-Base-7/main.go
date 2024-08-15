@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -10,23 +9,24 @@ func convertToBase7(num int) string {
 	if num == 0 {
 		return "0"
 	}
-	minusFlg := false
+	var result strings.Builder
 	if num < 0 {
 		num = -num
-		minusFlg = true
+		result.WriteByte(45)
 	}
 
-	var result string
+	notZeroFlg := false
 	for maxSeven > 1 {
 		d := num / maxSeven
 		num = num % maxSeven
-		result += fmt.Sprint(d)
+		if d != 0 {
+			notZeroFlg = true
+		}
+		if notZeroFlg {
+			result.WriteByte((byte)(d) + 48)
+		}
 		maxSeven /= 7
 	}
-	result += fmt.Sprint(num)
-	result = strings.TrimLeft(result, "0")
-	if minusFlg {
-		result = "-" + result
-	}
-	return result
+	result.WriteByte((byte)(num) + 48)
+	return result.String()
 }
