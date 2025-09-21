@@ -18,6 +18,10 @@ func TestMaximumGap(t *testing.T) {
 			[]int{10},
 			0,
 		},
+		{
+			[]int{1, 1, 1, 1, 1, 5, 5, 5, 5, 5},
+			4,
+		},
 	}
 
 	for i, tc := range testcases {
